@@ -1,0 +1,9 @@
+<hibernate-mapping>
+    <class name="com.kinopoisk.model.Country" table="country">
+        <id column="countryid" name="id" type="java.lang.Integer"  unsaved-value="null">
+            <!--generator class="native" /-->
+        </id>
+        <property column="country" name="name" type="java.lang.String"/>
+
+    </class>
+</hibernate-mapping>
