@@ -19,6 +19,7 @@ public class Movie {
     private List<Actor> actors;
     private List<Director> directors;
     private List<Genre> genres;
+    private List<Country> countries;
 
     public Movie() {
     }
@@ -132,5 +133,13 @@ public class Movie {
 
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
+    }
+
+    public List<Country> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
     }
 }

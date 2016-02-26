@@ -1,6 +1,5 @@
 package com.kinopoisk;
 
-import com.kinopoisk.dao.QueryResult;
 import com.kinopoisk.model.Country;
 
 public class Main {
