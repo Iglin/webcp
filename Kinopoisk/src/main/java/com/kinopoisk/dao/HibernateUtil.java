@@ -12,8 +12,9 @@ public class HibernateUtil {
     static {
         try {
             sessionFactory = new Configuration()
-                   // .configure("/resources/hibernate.cfg.xml")
+                    //.configure("/home/alexander/repository/webcp/Kinopoisk/src/resources/hibernate.cfg.xml")
                     .configure()
+                    .setProperty("hibernate.show_sql", "true")
                     .addAnnotatedClass(Country.class)
                     .buildSessionFactory();
         } catch (Throwable ex) {

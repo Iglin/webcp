@@ -17,13 +17,12 @@ public class CountryDAO {
         int id;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            session.save(country);
-//            id = (Integer) session.save(country);
+            id = (Integer) session.save(country);
             session.getTransaction().commit();
         } catch (ExceptionInInitializerError e) {
             return new QueryResult(false, e.getMessage());
         }
-        return new QueryResult(true, null);
+        return new QueryResult(true, id);
     }
 
     public QueryResult update(Country country) {
@@ -49,40 +48,22 @@ public class CountryDAO {
     }
 
     public QueryResult getById(int id) {
-        try (Connection connection = dbConnection.getConnection()) {
-            String sql = "SELECT countryid, country FROM country WHERE countryid = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-
-            Country country = new Country();
-            while (rs.next()) {
-                country.setId(rs.getInt("countryid"));
-                country.setName(rs.getString("country"));
-            }
-            connection.close();
-            return new QueryResult(true, country);
-        } catch (SQLException e) {
+        Country country;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            country = session.get(Country.class, id);
+        } catch (ExceptionInInitializerError e) {
             return new QueryResult(false, e.getMessage());
         }
+        return new QueryResult(true, country);
     }
 
     public QueryResult getAll() {
-        try (Connection connection = dbConnection.getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM country");
-
-            List<Country> list = new ArrayList<>(rs.getFetchSize());
-            while (rs.next()) {
-                Country country = new Country();
-                country.setId(rs.getInt("countryid"));
-                country.setName(rs.getString("country"));
-                list.add(country);
-            }
-            connection.close();
-            return new QueryResult(true, list);
-        } catch (SQLException e) {
+        List<Country> list;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            list = session.createCriteria(Country.class).list();
+        } catch (ExceptionInInitializerError e) {
             return new QueryResult(false, e.getMessage());
         }
+        return new QueryResult(true, list);
     }
 }

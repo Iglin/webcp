@@ -6,7 +6,8 @@ import javax.persistence.*;
 @Table(name = "country")
 public class Country {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @SequenceGenerator(name = "country_seq", sequenceName = "country_countryid_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "country_seq")
     @Column(name = "countryid")
     private Integer id;
     @Column(name = "country")
@@ -33,5 +34,13 @@ public class Country {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
