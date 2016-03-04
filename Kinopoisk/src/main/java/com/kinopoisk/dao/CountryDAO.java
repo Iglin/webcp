@@ -1,6 +1,7 @@
 package com.kinopoisk.dao;
 
 import com.kinopoisk.model.Country;
+import org.hibernate.Session;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,42 +14,38 @@ public class CountryDAO {
     private DataBaseConnection dbConnection = new DataBaseConnection();
 
     public QueryResult add(Country country) {
-        try (Connection connection = dbConnection.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO country (country) VALUES (?)");
-            statement.setString(1, country.getName());
-            statement.executeUpdate();
-            connection.close();
-            return new QueryResult(true);
-        } catch (SQLException e) {
+        int id;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.save(country);
+//            id = (Integer) session.save(country);
+            session.getTransaction().commit();
+        } catch (ExceptionInInitializerError e) {
             return new QueryResult(false, e.getMessage());
         }
+        return new QueryResult(true, null);
     }
 
     public QueryResult update(Country country) {
-        try (Connection connection = dbConnection.getConnection()) {
-            String sql = "UPDATE country SET country = ? WHERE countryid = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, country.getName());
-            statement.setInt(2, country.getId());
-            statement.executeUpdate();
-            connection.close();
-            return new QueryResult(true);
-        } catch (SQLException e) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.update(country);
+            session.getTransaction().commit();
+        } catch (ExceptionInInitializerError e) {
             return new QueryResult(false, e.getMessage());
         }
+        return new QueryResult(true, null);
     }
 
     public QueryResult delete(Country country) {
-        try (Connection connection = dbConnection.getConnection()) {
-            String sql = "DELETE FROM country WHERE countryid = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, country.getId());
-            statement.executeUpdate();
-            connection.close();
-            return new QueryResult(true);
-        } catch (SQLException e) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(country);
+            session.getTransaction().commit();
+        } catch (ExceptionInInitializerError e) {
             return new QueryResult(false, e.getMessage());
         }
+        return new QueryResult(true, null);
     }
 
     public QueryResult getById(int id) {

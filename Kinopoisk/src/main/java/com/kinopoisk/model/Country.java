@@ -1,7 +1,15 @@
 package com.kinopoisk.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "country")
 public class Country {
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "countryid")
     private Integer id;
+    @Column(name = "country")
     private String name;
 
     public Country() {
