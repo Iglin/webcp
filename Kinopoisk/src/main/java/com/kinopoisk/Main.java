@@ -1,14 +1,9 @@
 package com.kinopoisk;
 
-import com.kinopoisk.dao.ActorDAO;
-import com.kinopoisk.dao.CountryDAO;
 import com.kinopoisk.dao.MovieDAO;
 import com.kinopoisk.dao.QueryResult;
-import com.kinopoisk.model.Actor;
-import com.kinopoisk.model.Country;
 import com.kinopoisk.model.Movie;
 
-import java.sql.Date;
 import java.util.List;
 
 public class Main {

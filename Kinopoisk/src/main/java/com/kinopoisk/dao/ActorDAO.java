@@ -1,11 +1,6 @@
 package com.kinopoisk.dao;
 
 import com.kinopoisk.model.Actor;
-import com.kinopoisk.model.Country;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by user on 27.02.2016.

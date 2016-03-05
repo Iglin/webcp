@@ -12,7 +12,6 @@ public class HibernateUtil {
     static {
         try {
             sessionFactory = new Configuration()
-                    //.configure("/home/alexander/repository/webcp/Kinopoisk/src/resources/hibernate.cfg.xml")
                     .configure()
                     .setProperty("hibernate.show_sql", "true")
                     .addAnnotatedClass(Country.class)
@@ -23,7 +22,6 @@ public class HibernateUtil {
                     .buildSessionFactory();
         } catch (Throwable ex) {
             ex.printStackTrace();
-          //  System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }

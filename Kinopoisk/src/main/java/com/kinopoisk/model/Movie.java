@@ -2,8 +2,7 @@ package com.kinopoisk.model;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.Set;
 
 /**
  * Created by alexander on 27.02.16.
@@ -27,32 +26,32 @@ public class Movie {
     @Column(name = "details")
     private String details;
     @Column(name = "rating")
-    private float rating;
+    private Float rating;
     @Column(name = "agerating")
-    private int ageRating;
+    private Integer ageRating;
     @Column(name = "duration")
-    private int duration;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Integer duration;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "movieactors", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "actorid") })
-    private List<Actor> actors;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Actor> actors;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "moviedirectors", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "directorid") })
-    private List<Director> directors;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Director> directors;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "moviegenres", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "genreid") })
-    private List<Genre> genres;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Genre> genres;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "moviecountries", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "countryid") })
-    private List<Country> countries;
+    private Set<Country> countries;
 
     public Movie() {
     }
 
-    public Movie(String title, Date releaseDate, String posterURL, String tagline, String details, float rating, int ageRating, int duration, List<Actor> actors, List<Director> directors, List<Genre> genres) {
+    public Movie(String title, Date releaseDate, String posterURL, String tagline, String details, float rating, int ageRating, int duration, Set<Actor> actors, Set<Director> directors, Set<Genre> genres) {
 
         this.title = title;
         this.releaseDate = releaseDate;
@@ -139,35 +138,35 @@ public class Movie {
         this.duration = duration;
     }
 
-    public List<Actor> getActors() {
+    public Set<Actor> getActors() {
         return actors;
     }
 
-    public void setActors(List<Actor> actors) {
+    public void setActors(Set<Actor> actors) {
         this.actors = actors;
     }
 
-    public List<Director> getDirectors() {
+    public Set<Director> getDirectors() {
         return directors;
     }
 
-    public void setDirectors(List<Director> directors) {
+    public void setDirectors(Set<Director> directors) {
         this.directors = directors;
     }
 
-    public List<Genre> getGenres() {
+    public Set<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Genre> genres) {
+    public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
 
-    public List<Country> getCountries() {
+    public Set<Country> getCountries() {
         return countries;
     }
 
-    public void setCountries(List<Country> countries) {
+    public void setCountries(Set<Country> countries) {
         this.countries = countries;
     }
 

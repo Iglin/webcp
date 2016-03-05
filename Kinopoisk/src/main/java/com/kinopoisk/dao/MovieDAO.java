@@ -1,10 +1,6 @@
 package com.kinopoisk.dao;
 
-import com.kinopoisk.model.*;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import com.kinopoisk.model.Movie;
 
 /**
  * Created by user on 27.02.2016.
