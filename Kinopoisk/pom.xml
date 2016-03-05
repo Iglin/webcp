@@ -4,7 +4,7 @@
 
     <artifactId>kinopoisk-cp</artifactId>
     <groupId>com.kinopoisk</groupId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <version>1.0</version>
 
     <properties>
