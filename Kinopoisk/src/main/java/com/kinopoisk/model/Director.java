@@ -1,15 +1,27 @@
 package com.kinopoisk.model;
 
+import javax.persistence.*;
 import java.sql.Date;
 
 /**
  * Created by alexander on 26.02.16.
  */
+@Entity
+@Table(name = "director")
 public class Director {
+    @Id
+    @SequenceGenerator(name = "director_seq", sequenceName = "director_directorid_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "director_seq")
+    @Column(name = "directorid")
     private Integer id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "dob")
     private Date dateOfBirth;
+    @Column(name = "pic")
     private String pictureURL;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "countryid")
     private Country country;
 
     public Director() {

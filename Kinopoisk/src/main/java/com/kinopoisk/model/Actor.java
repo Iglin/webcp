@@ -20,7 +20,7 @@ public class Actor {
     private Date dateOfBirth;
     @Column(name = "pic")
     private String pictureURL;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "countryid")
     private Country country;
 
