@@ -1,15 +1,27 @@
 package com.kinopoisk.model;
 
+import javax.persistence.*;
 import java.sql.Date;
 
 /**
  * Created by alexander on 26.02.16.
  */
+@Entity
+@Table(name = "actor")
 public class Actor {
+    @Id
+    @SequenceGenerator(name = "actor_seq", sequenceName = "actor_actorid_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "actor_seq")
+    @Column(name = "actorid")
     private Integer id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "dob")
     private Date dateOfBirth;
+    @Column(name = "pic")
     private String pictureURL;
+    @ManyToOne
+    @JoinColumn(name = "countryid")
     private Country country;
 
     public Actor() {
@@ -64,5 +76,16 @@ public class Actor {
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", pictureURL='" + pictureURL + '\'' +
+                ", country=" + country.getName() +
+                '}';
     }
 }

@@ -1,6 +1,8 @@
 package com.kinopoisk.dao;
 
+import com.kinopoisk.model.Actor;
 import com.kinopoisk.model.Country;
+import com.kinopoisk.model.Genre;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -16,6 +18,8 @@ public class HibernateUtil {
                     .configure()
                     .setProperty("hibernate.show_sql", "true")
                     .addAnnotatedClass(Country.class)
+                    .addAnnotatedClass(Actor.class)
+                    .addAnnotatedClass(Genre.class)
                     .buildSessionFactory();
         } catch (Throwable ex) {
             ex.printStackTrace();
