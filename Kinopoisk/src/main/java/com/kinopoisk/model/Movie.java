@@ -31,19 +31,19 @@ public class Movie {
     private Integer ageRating;
     @Column(name = "duration")
     private Integer duration;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "movieactors", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "actorid") })
     private Set<Actor> actors;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "moviedirectors", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "directorid") })
     private Set<Director> directors;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "moviegenres", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "genreid") })
     private Set<Genre> genres;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "moviecountries", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "countryid") })
     private Set<Country> countries;

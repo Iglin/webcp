@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.url">
-            jdbc:postgresql://127.0.0.1:5433/webcp
+            jdbc:postgresql://127.0.0.1:5454/webcp
         </property>
         <property name="connection.driver_class">
             org.postgresql.Driver

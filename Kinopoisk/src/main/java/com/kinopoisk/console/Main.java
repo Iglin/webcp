@@ -1,4 +1,4 @@
-package com.kinopoisk;
+package com.kinopoisk.console;
 
 import com.kinopoisk.dao.MovieDAO;
 import com.kinopoisk.dao.QueryResult;
@@ -13,7 +13,8 @@ public class Main {
         QueryResult queryResult = movieDAO.listAll();
         if (queryResult.isSuccess()) {
             List<Movie> list = (List<Movie>) queryResult.getResult();
-            list.forEach(movie -> System.out.println(movie.toString()));
+            System.out.println(list.toString());
+            //list.forEach(movie -> System.out.println(movie.toString()));
         } else {
             System.err.println(queryResult.getErrorMessage());
         }
