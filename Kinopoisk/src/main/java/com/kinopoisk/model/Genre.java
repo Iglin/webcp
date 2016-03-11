@@ -20,7 +20,6 @@ public class Genre {
     }
 
     public Genre(String name) {
-
         this.name = name;
     }
 

@@ -2,6 +2,7 @@ package com.kinopoisk.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 /**
  * Created by alexander on 26.02.16.
@@ -23,6 +24,10 @@ public class Director {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "countryid")
     private Country country;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "moviedirectors", joinColumns = { @JoinColumn(name = "directorid") },
+            inverseJoinColumns = { @JoinColumn(name = "movieid") })
+    private Set<Movie> movies;
 
     public Director() {
     }
@@ -76,5 +81,13 @@ public class Director {
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
     }
 }

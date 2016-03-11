@@ -23,21 +23,21 @@
       </tr>
   </table>
 
-  <form action="/movies/" method="post">
+  <form action="/directors/" method="post">
       Search : <input type="text" name="input_par">
       by : <select name = "option" id = "option">
+      <option>Director's name</option>
       <option>Movie title</option>
-      <option>Actor</option>
-      <option>Director</option>
-      <option>Genre</option>
       <option>Country</option>
   </select>
       <input type="submit" name = "search" value="Search"/>
   </form>
-  <c:forEach var="movie" items="${movies}">
+  <c:forEach var="director" items="${directors}">
       <div>
-          <a href="/movie/show?id=${movie.getId()}">${movie.getTitle()}</a><br>
-          <img src="${movie.getPosterURL()}"/><br>
+          <h3><a href="/director?id=${director.getId()}">${director.getName()}</a></h3><br>
+          <c:if test="${not empty director.pictureURL}">
+              <img src="${director.getPictureURL()}"/><br>
+          </c:if>
       </div>
   </c:forEach>
   </body>

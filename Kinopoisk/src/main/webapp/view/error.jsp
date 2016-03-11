@@ -19,6 +19,6 @@
 </form-->
 <h3>Error</h3>
 <c:out value="${errorMessage}"/>
-<a href="index.jsp">Main page</a>
+<a href="/view/index.jsp">Main page</a>
 </body>
 </html>

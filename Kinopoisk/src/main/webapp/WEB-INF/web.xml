@@ -3,8 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <welcome-file-list>
+        <welcome-file>/view/index.jsp</welcome-file>
+    </welcome-file-list>
 
-    <servlet>
+    <!--servlet>
         <description></description>
         <display-name>MovieController</display-name>
         <servlet-name>MovieController</servlet-name>
@@ -12,6 +15,16 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>MovieController</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/movies/</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <display-name>ActorController</display-name>
+        <servlet-name>ActorController</servlet-name>
+        <servlet-class>com.kinopoisk.controller.ActorController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ActorController</servlet-name>
+        <url-pattern>/actors/*</url-pattern>
+    </servlet-mapping-->
 </web-app>
