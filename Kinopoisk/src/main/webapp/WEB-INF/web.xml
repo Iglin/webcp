@@ -7,6 +7,22 @@
         <welcome-file>/view/index.jsp</welcome-file>
     </welcome-file-list>
 
+    <servlet>
+        <servlet-name>index.jsp</servlet-name>
+        <jsp-file>/view/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>index.jsp</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>actors.jsp</servlet-name>
+        <jsp-file>/view/actors.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>actors.jsp</servlet-name>
+        <url-pattern>/actors</url-pattern>
+    </servlet-mapping>
     <!--servlet>
         <description></description>
         <display-name>MovieController</display-name>
