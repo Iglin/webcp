@@ -1,6 +1,5 @@
 <%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.dao.MovieDAO" %>
-<%@ page import="com.kinopoisk.controller.PageState" %>
 <%@ page import="com.kinopoisk.model.Movie" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
@@ -20,13 +19,13 @@
           <td>
               <button class = "menu_btn" onclick="window.location.href=('/index')">Movies</button>
               <button class = "menu_btn" onclick="window.location.href=('/actors')">Actors</button>
-              <button class = "menu_btn" onclick="window.location.href=(<%=request.getContextPath()%>'directors.jsp')">Directors</button>
-              <button class = "menu_btn" onclick="window.location.href=(<%=request.getContextPath()%>'search.jsp')">Advanced Search</button>
+              <button class = "menu_btn" onclick="window.location.href=('/directors')">Directors</button>
+              <button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button>
           </td>
       </tr>
   </table>
 
-  <form action="/movies/" method="post">
+  <form action="/index" method="post">
       Search : <input type="text" name="input_par">
       by : <select name = "option" id = "option">
       <option>Movie title</option>
@@ -38,12 +37,8 @@
       <input type="submit" name = "search" value="Search"/>
   </form>
   <%
-      PageState pageState = PageState.SHOW_ALL;
-      if (request.getParameter("search") != null) {
-          pageState = PageState.SEARCH;
-      }
       QueryResult queryResult = null;
-      if (pageState == PageState.SEARCH) {
+      if (request.getParameter("search") != null) {
           String option = request.getParameter("option");
           switch (option) {
               case "Actor":
@@ -74,9 +69,9 @@
           for (Movie movie : movies) {
   %>
       <tr>
-          <td><%=movie.getTitle()%></td>
-          <td><img src="<%=movie.getPosterURL()%>"/></td>
-          <td><%=movie.getDetails()%></td>
+          <td><a href="/movie_details/show?id=<%=movie.getId()%>"><%=movie.getTitle()%></a></td>
+          <td><a href="/movie_details/show?id=<%=movie.getId()%>"><img src="<%=movie.getPosterURL()%>"/></a></td>
+          <td><a href="/movie_details/show?id=<%=movie.getId()%>"><%=movie.getDetails()%></a></td>
       </tr>
       <%
               }

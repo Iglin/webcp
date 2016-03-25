@@ -1,9 +1,7 @@
 package com.kinopoisk.dao;
 
-import com.kinopoisk.model.Actor;
 import com.kinopoisk.model.Movie;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -14,6 +12,14 @@ import java.util.List;
  */
 public class MovieDAO {
     private CommonDAO commonDAO = new CommonDAO();
+
+    public Session openSession() {
+        return commonDAO.openSession();
+    }
+
+    public void closeSession() {
+        commonDAO.closeSession();
+    }
 
     public QueryResult add(Movie movie) {
         return commonDAO.add(movie);

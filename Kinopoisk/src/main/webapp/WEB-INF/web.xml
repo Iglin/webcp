@@ -15,6 +15,7 @@
         <servlet-name>index.jsp</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>actors.jsp</servlet-name>
         <jsp-file>/view/actors.jsp</jsp-file>
@@ -22,6 +23,42 @@
     <servlet-mapping>
         <servlet-name>actors.jsp</servlet-name>
         <url-pattern>/actors</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>directors.jsp</servlet-name>
+        <jsp-file>/view/directors.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>directors.jsp</servlet-name>
+        <url-pattern>/directors</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>movie_details.jsp</servlet-name>
+        <jsp-file>/view/movie_details.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>movie_details.jsp</servlet-name>
+        <url-pattern>/movie_details/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>actor_details.jsp</servlet-name>
+        <jsp-file>/view/actor_details.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>actor_details.jsp</servlet-name>
+        <url-pattern>/actor_details/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>director_details.jsp</servlet-name>
+        <jsp-file>/view/director_details.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>director_details.jsp</servlet-name>
+        <url-pattern>/director_details/*</url-pattern>
     </servlet-mapping>
     <!--servlet>
         <description></description>

@@ -14,6 +14,14 @@ import java.util.List;
 public class ActorDAO {
     private CommonDAO commonDAO = new CommonDAO();
 
+    public Session openSession() {
+        return commonDAO.openSession();
+    }
+
+    public void closeSession() {
+        commonDAO.closeSession();
+    }
+
     public QueryResult add(Actor actor) {
         return commonDAO.add(actor);
     }

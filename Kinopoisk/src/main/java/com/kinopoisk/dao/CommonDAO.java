@@ -9,9 +9,22 @@ import java.util.List;
  */
 public class CommonDAO {
 
+    private Session session;
+
+    public Session openSession() {
+        session = HibernateUtil.getSessionFactory().openSession();
+        return session;
+    }
+
+    public void closeSession() {
+        if (session.isOpen()) {
+            session.close();
+        }
+    }
+
     public QueryResult add(Object object) {
         int id;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = openSession()) {
             session.beginTransaction();
             id = (Integer) session.save(object);
             session.getTransaction().commit();
@@ -22,7 +35,7 @@ public class CommonDAO {
     }
 
     public QueryResult update(Object object) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = openSession()) {
             session.beginTransaction();
             session.update(object);
             session.getTransaction().commit();
@@ -33,7 +46,7 @@ public class CommonDAO {
     }
 
     public QueryResult delete(Object object) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = openSession()) {
             session.beginTransaction();
             session.delete(object);
             session.getTransaction().commit();
@@ -45,7 +58,7 @@ public class CommonDAO {
 
     public QueryResult getById(int id, Class objClass) {
         Object object;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try {
             object = session.get(objClass, id);
         } catch (ExceptionInInitializerError e) {
             return new QueryResult(false, e.getMessage());

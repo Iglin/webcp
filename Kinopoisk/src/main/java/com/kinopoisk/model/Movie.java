@@ -114,7 +114,7 @@ public class Movie {
         this.details = details;
     }
 
-    public float getRating() {
+    public Float getRating() {
         return rating;
     }
 
@@ -122,7 +122,7 @@ public class Movie {
         this.rating = rating;
     }
 
-    public int getAgeRating() {
+    public Integer getAgeRating() {
         return ageRating;
     }
 
@@ -130,7 +130,7 @@ public class Movie {
         this.ageRating = ageRating;
     }
 
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 

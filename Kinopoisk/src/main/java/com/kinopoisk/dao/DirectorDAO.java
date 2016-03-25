@@ -13,6 +13,14 @@ import java.util.List;
 public class DirectorDAO {
     private CommonDAO commonDAO = new CommonDAO();
 
+    public Session openSession() {
+        return commonDAO.openSession();
+    }
+
+    public void closeSession() {
+        commonDAO.closeSession();
+    }
+
     public QueryResult add(Director director) {
         return commonDAO.add(director);
     }
