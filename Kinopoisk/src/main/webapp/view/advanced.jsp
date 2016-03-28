@@ -11,31 +11,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-      <link rel="stylesheet" type="text/css" href="/resources/css/main.css">
     <title>Kinopoisk</title>
   </head>
   <body>
-  <table id = "menu_table">
+  <table>
       <tr>
           <td>
               <button class = "menu_btn" onclick="window.location.href=('/index')">Movies</button>
               <button class = "menu_btn" onclick="window.location.href=('/actors')">Actors</button>
               <button class = "menu_btn" onclick="window.location.href=('/directors')">Directors</button>
-              <!--button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button-->
+              <button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button>
           </td>
       </tr>
   </table>
 
+  <h3>Search</h3>
   <form action="/index" method="post">
-      Search : <input type="text" name="input_par" id = "input_par">
-      by : <select name = "option" id = "option">
-      <option>Movie title</option>
-      <option>Actor</option>
-      <option>Director</option>
-      <option>Genre</option>
-      <option>Country</option>
-  </select>
-      <input type="submit" name = "search" value="Search" id = "search"/>
+      <h3>for : </h3>
+      Movies <input class="radio_input" type="radio" name="want_movie" id = "want_movie">
+      Actors <input class="radio_input" type="radio" name="want_actor" id = "want_actor">
+      Directors <input class="radio_input" type="radio" name="want_dir" id = "want_dir">
+      <h3>by : </h3>
+      <select name = "option" id = "option"></select>
+      <input type="submit" name = "search" value="Search"/>
   </form>
   <%
       QueryResult queryResult = null;
@@ -63,16 +61,16 @@
       }
       if (queryResult.isSuccess()) {
   %>
-  <table id = "res_table">
-      <tr><th class="movie_title">Title</th><th>Poster</th><th>Description</th></tr>
+  <table>
+      <tr><th>Title</th><th>Poster</th><th>Description</th></tr>
   <%
           List<Movie> movies = (List<Movie>) queryResult.getResult();
           for (Movie movie : movies) {
   %>
       <tr>
-          <td class="movie_title"><a href="/movie_details/show?id=<%=movie.getId()%>"><%=movie.getTitle()%></a></td>
+          <td><a href="/movie_details/show?id=<%=movie.getId()%>"><%=movie.getTitle()%></a></td>
           <td><a href="/movie_details/show?id=<%=movie.getId()%>"><img src="<%=movie.getPosterURL()%>"/></a></td>
-          <td class="descr"><%=movie.getDetails()%></td>
+          <td><%=movie.getDetails()%></td>
       </tr>
       <%
               }
@@ -83,5 +81,6 @@
       }
   %>
   </table>
+  <script src="/resources/js/search.js"></script>
   </body>
 </html>

@@ -12,15 +12,16 @@
 <html>
   <head>
     <title>Kinopoisk</title>
+      <link rel="stylesheet" type="text/css" href="/resources/css/main.css">
   </head>
   <body>
-  <table>
+  <table id = "menu_table">
       <tr>
           <td>
               <button class = "menu_btn" onclick="window.location.href=('/index')">Movies</button>
               <button class = "menu_btn" onclick="window.location.href=('/actors')">Actors</button>
               <button class = "menu_btn" onclick="window.location.href=('/directors')">Directors</button>
-              <button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button>
+              <!--button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button-->
           </td>
       </tr>
   </table>
@@ -54,16 +55,31 @@
       }
       if (queryResult.isSuccess()) {
   %>
+  <table>
       <%
           List<Actor> actors = (List<Actor>) queryResult.getResult();
+          int i = 0;
           for (Actor actor : actors) {
+              if (i == 0) {
       %>
-      <div>
-          <a href="/actor_details/show?id=<%=actor.getId()%>"><%=actor.getName()%></a><br>
-          <a href="/actor_details/show?id=<%=actor.getId()%>"><img src="<%=actor.getPictureURL()%>"/></a>
-      </div>
+      <tr>
       <%
               }
+      %>
+      <td>
+          <a class="actor_name" href="/actor_details/show?id=<%=actor.getId()%>"><%=actor.getName()%></a><br>
+          <a href="/actor_details/show?id=<%=actor.getId()%>"><img class="actor_pic" src="<%=actor.getPictureURL()%>"/></a>
+      </td>
+      <%    if (i == 3) {    %>
+          </tr>
+      <%
+       i = 0;
+      }
+      i++;
+              }
+      %>
+  </table>
+  <%
           } else {
               RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
               request.setAttribute("errorMessage", queryResult.getErrorMessage());

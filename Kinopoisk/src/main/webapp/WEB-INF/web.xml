@@ -60,24 +60,23 @@
         <servlet-name>director_details.jsp</servlet-name>
         <url-pattern>/director_details/*</url-pattern>
     </servlet-mapping>
-    <!--servlet>
-        <description></description>
-        <display-name>MovieController</display-name>
-        <servlet-name>MovieController</servlet-name>
-        <servlet-class>com.kinopoisk.controller.MovieController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MovieController</servlet-name>
-        <url-pattern>/movies/</url-pattern>
-    </servlet-mapping>
 
     <servlet>
-        <display-name>ActorController</display-name>
-        <servlet-name>ActorController</servlet-name>
-        <servlet-class>com.kinopoisk.controller.ActorController</servlet-class>
+        <servlet-name>advanced.jsp</servlet-name>
+        <jsp-file>/view/advanced.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ActorController</servlet-name>
-        <url-pattern>/actors/*</url-pattern>
-    </servlet-mapping-->
+        <servlet-name>advanced.jsp</servlet-name>
+        <url-pattern>/search/*</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
 </web-app>

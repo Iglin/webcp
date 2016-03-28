@@ -13,15 +13,16 @@
 <html>
 <head>
     <title>Kinopoisk</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/main.css">
 </head>
 <body>
-<table>
+<table id = "menu_table">
     <tr>
         <td>
             <button class = "menu_btn" onclick="window.location.href=('/index')">Movies</button>
             <button class = "menu_btn" onclick="window.location.href=('/actors')">Actors</button>
             <button class = "menu_btn" onclick="window.location.href=('/directors')">Directors</button>
-            <button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button>
+            <!--button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button-->
         </td>
     </tr>
 </table>
@@ -37,11 +38,11 @@
         if (queryResult.isSuccess()) {
             Movie movie = (Movie) queryResult.getResult();
 %>
-<h2><%=movie.getTitle()%></h2><br>
+<h2><%=movie.getTitle()%></h2>
 <% if (movie.getTagline() != null) { %>
-<h3><%=movie.getTagline()%></h3><br>
+<h3><%=movie.getTagline()%></h3>
 <% } %>
-<img src="<%=movie.getPosterURL()%>"/><br>
+<div><img class="dir_pic" src="<%=movie.getPosterURL()%>"/></div>
     <%=movie.getDetails()%>
 <h3>Genre: </h3>
 <%
@@ -80,10 +81,9 @@
         i++;
     }
 %>
-<div>
     <h3>Directors: </h3><br>
 
-    <table>
+    <table id = "dir_table">
         <tr>
             <%
                 Set<Director> directors = movie.getDirectors();
@@ -100,11 +100,9 @@
             <% } %>
         </tr>
     </table>
-</div>
-<div>
     <h3>Actors: </h3><br>
 
-    <table>
+    <table id="res_table">
         <tr>
     <%
         Set<Actor> actors = movie.getActors();
@@ -117,11 +115,10 @@
             <%
                 for (Actor actor : actors) {
             %>
-            <td><a href="/actor_details/show?id=<%=actor.getId()%>"><img width="100px" src="<%=actor.getPictureURL()%>"/></a></td>
+            <td><a href="/actor_details/show?id=<%=actor.getId()%>"><img width="100px" height="270px" src="<%=actor.getPictureURL()%>"/></a></td>
             <% } %>
         </tr>
     </table>
-</div>
 
 <%
     } else {

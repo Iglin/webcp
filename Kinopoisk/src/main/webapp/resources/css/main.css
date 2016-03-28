@@ -1,0 +1,93 @@
+body {
+    font-size: 18pt;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+#menu_table {
+    background: white;
+    width: 100%;
+    align-content: center;
+}
+
+.menu_btn {
+    background: mediumpurple;
+    border-style: none;
+    color: white;
+    width: 33%;
+    align-content: center;
+    font-size: 14pt;
+}
+
+img {
+    width: 200px;
+}
+
+form {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 25px;
+    color: purple;
+}
+
+select {
+    font-size: 14pt;
+    width: 200px;
+}
+
+#search {
+    width: 200px;
+    font-size: 14pt;
+    color: white;
+    background: mediumpurple;
+}
+
+#input_par {
+    font-size: 14pt;
+}
+
+#res_table {
+    font-size: 16pt;
+    background: mediumpurple;
+    color: white;
+}
+
+a {
+    color: powderblue;
+}
+
+.movie_title {
+    width: 40%;
+}
+
+.actor_pic {
+    width: 240px;
+    height: 330px;
+}
+
+.actor_name {
+    font-size: 14pt;
+    color: rebeccapurple;
+}
+
+.dir_pic {
+    width: 440px;
+}
+
+div {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    align-content: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#dir_table {
+    font-size: 16pt;
+    background: mediumpurple;
+    color: white;
+}
+
+h2, h3 {
+    color: purple;
+}

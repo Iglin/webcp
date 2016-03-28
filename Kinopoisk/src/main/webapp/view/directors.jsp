@@ -12,15 +12,16 @@
 <html>
   <head>
     <title>Kinopoisk</title>
+      <link rel="stylesheet" type="text/css" href="/resources/css/main.css">
   </head>
   <body>
-  <table>
+  <table id = "menu_table">
       <tr>
           <td>
               <button class = "menu_btn" onclick="window.location.href=('/index')">Movies</button>
               <button class = "menu_btn" onclick="window.location.href=('/actors')">Actors</button>
               <button class = "menu_btn" onclick="window.location.href=('/directors')">Directors</button>
-              <button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button>
+              <!--button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button-->
           </td>
       </tr>
   </table>
@@ -59,8 +60,8 @@
       for (Director director : directors) {
   %>
   <div>
-      <a href="/director_details/show?id=<%=director.getId()%>"><%=director.getName()%></a><br>
-      <a href="/director_details/show?id=<%=director.getId()%>"><img src="<%=director.getPictureURL()%>"/></a>
+      <a class="actor_name" href="/director_details/show?id=<%=director.getId()%>"><%=director.getName()%></a><br>
+      <a href="/director_details/show?id=<%=director.getId()%>"><img class="dir_pic" src="<%=director.getPictureURL()%>"/></a>
   </div>
   <%
           }

@@ -13,15 +13,16 @@
 <html>
 <head>
     <title>Kinopoisk</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/main.css">
 </head>
 <body>
-<table>
+<table id = "menu_table">
     <tr>
         <td>
             <button class = "menu_btn" onclick="window.location.href=('/index')">Movies</button>
             <button class = "menu_btn" onclick="window.location.href=('/actors')">Actors</button>
             <button class = "menu_btn" onclick="window.location.href=('/directors')">Directors</button>
-            <button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button>
+            <!--button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button-->
         </td>
     </tr>
 </table>
@@ -37,15 +38,14 @@
         if (queryResult.isSuccess()) {
             Director director = (Director) queryResult.getResult();
 %>
-<h2><%=director.getName()%></h2><br>
-<img src="<%=director.getPictureURL()%>"/><br>
+<h2><%=director.getName()%></h2>
+<div><img class="dir_pic" src="<%=director.getPictureURL()%>"/></div>
 <h3>Country: </h3><%=director.getCountry().getName()%>
 <% if (director.getDateOfBirth()!= null) { %>
 <h3>Date of birth: </h3><%=director.getDateOfBirth()%>
 <% } %>
-<div>
-    <h3>Movies: </h3><br>
-    <table>
+    <h3>Movies: </h3>
+    <table id="res_table">
         <tr>
             <%
                 Set<Movie> movies = director.getMovies();
@@ -62,7 +62,6 @@
             <% } %>
         </tr>
     </table>
-</div>
 <%
     } else {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
