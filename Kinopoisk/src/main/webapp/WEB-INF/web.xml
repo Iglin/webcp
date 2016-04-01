@@ -70,6 +70,24 @@
         <url-pattern>/search/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>editor.jsp</servlet-name>
+        <jsp-file>/view/editor.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor.jsp</servlet-name>
+        <url-pattern>/editor</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editor_movies.jsp</servlet-name>
+        <jsp-file>/view/editor_movies.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor_movies.jsp</servlet-name>
+        <url-pattern>/editor_movies</url-pattern>
+    </servlet-mapping>
+
 
     <servlet-mapping>
         <servlet-name>default</servlet-name>

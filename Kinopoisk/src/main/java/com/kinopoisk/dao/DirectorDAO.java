@@ -37,6 +37,10 @@ public class DirectorDAO {
         return commonDAO.getById(id, Director.class);
     }
 
+    public Director getById(int id, Session session) {
+        return session.get(Director.class, id);
+    }
+
     public QueryResult listAll() {
         return commonDAO.listAll(Director.class);
     }

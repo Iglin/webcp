@@ -37,6 +37,10 @@ public class MovieDAO {
         return commonDAO.getById(id, Movie.class);
     }
 
+    public Movie getById(int id, Session session) {
+        return session.get(Movie.class, id);
+    }
+
     public QueryResult listAll() {
         return commonDAO.listAll(Movie.class);
     }
