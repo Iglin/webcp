@@ -28,7 +28,7 @@ public class CommonDAO {
             session.beginTransaction();
             id = (Integer) session.save(object);
             session.getTransaction().commit();
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             return new QueryResult(false, e.getMessage());
         }
         return new QueryResult(true, id);
@@ -39,7 +39,7 @@ public class CommonDAO {
             session.beginTransaction();
             session.update(object);
             session.getTransaction().commit();
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             return new QueryResult(false, e.getMessage());
         }
         return new QueryResult(true, null);
@@ -50,7 +50,7 @@ public class CommonDAO {
             session.beginTransaction();
             session.delete(object);
             session.getTransaction().commit();
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             return new QueryResult(false, e.getMessage());
         }
         return new QueryResult(true, null);
@@ -60,7 +60,17 @@ public class CommonDAO {
         Object object;
         try {
             object = session.get(objClass, id);
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
+            return new QueryResult(false, e.getMessage());
+        }
+        return new QueryResult(true, object);
+    }
+
+    public QueryResult getByIdNoSession(int id, Class objClass) {
+        Object object;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            object = session.get(objClass, id);
+        } catch (Exception e) {
             return new QueryResult(false, e.getMessage());
         }
         return new QueryResult(true, object);
@@ -70,7 +80,7 @@ public class CommonDAO {
         List<Object> list;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             list = session.createCriteria(objClass).list();
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             return new QueryResult(false, e.getMessage());
         }
         return new QueryResult(true, list);

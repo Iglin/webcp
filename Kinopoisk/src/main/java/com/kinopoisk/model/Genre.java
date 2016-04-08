@@ -1,10 +1,8 @@
 package com.kinopoisk.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
-/**
- * Created by alexander on 26.02.16.
- */
 @Entity
 @Table(name = "genre")
 public class Genre {
@@ -13,8 +11,13 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genre_seq")
     @Column(name = "genreid")
     private Integer id;
-    @Column(name = "genre")
+    @Column(name = "genre", unique = true)
     private String name;
+
+    @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "moviegenres", joinColumns = { @JoinColumn(name = "genreid") },
+            inverseJoinColumns = { @JoinColumn(name = "movieid") })
+    private Set<Movie> movies;
 
     public Genre() {
     }
@@ -24,7 +27,6 @@ public class Genre {
     }
 
     public Integer getId() {
-
         return id;
     }
 
@@ -38,5 +40,18 @@ public class Genre {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
+    }
+
+    @Override
+    public String toString() {
+        return "Genre { " + id + " : " + name + " }";
     }
 }

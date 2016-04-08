@@ -1,5 +1,6 @@
 package com.kinopoisk.dao;
 
+import com.kinopoisk.model.Actor;
 import com.kinopoisk.model.Director;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -31,6 +32,10 @@ public class DirectorDAO {
 
     public QueryResult delete(Director director) {
         return commonDAO.delete(director);
+    }
+
+    public QueryResult getByIdNoSession(int id) {
+        return commonDAO.getByIdNoSession(id, Director.class);
     }
 
     public QueryResult getById(int id) {

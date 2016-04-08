@@ -37,6 +37,10 @@ public class GenreDAO {
         return session.get(Genre.class, id);
     }
 
+    public QueryResult getByIdNoSession(int id) {
+        return commonDAO.getByIdNoSession(id, Genre.class);
+    }
+
     public QueryResult listAll() {
         return commonDAO.listAll(Genre.class);
     }

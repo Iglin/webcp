@@ -21,10 +21,10 @@ public class Actor {
     private Date dateOfBirth;
     @Column(name = "pic")
     private String pictureURL;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "countryid")
     private Country country;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.PERSIST)
     @JoinTable(name = "movieactors", joinColumns = { @JoinColumn(name = "actorid") },
             inverseJoinColumns = { @JoinColumn(name = "movieid") })
     private Set<Movie> movies;

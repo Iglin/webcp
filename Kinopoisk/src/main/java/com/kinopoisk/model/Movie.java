@@ -31,22 +31,24 @@ public class Movie {
     private Integer ageRating;
     @Column(name = "duration")
     private Integer duration;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.PERSIST)
     @JoinTable(name = "movieactors", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "actorid") })
     private Set<Actor> actors;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.PERSIST)
     @JoinTable(name = "moviedirectors", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "directorid") })
     private Set<Director> directors;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "moviegenres", joinColumns = { @JoinColumn(name = "movieid") },
-            inverseJoinColumns = { @JoinColumn(name = "genreid") })
-    private Set<Genre> genres;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.PERSIST)
     @JoinTable(name = "moviecountries", joinColumns = { @JoinColumn(name = "movieid") },
             inverseJoinColumns = { @JoinColumn(name = "countryid") })
     private Set<Country> countries;
+
+    @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.MERGE)
+    @JoinTable(name = "moviegenres", joinColumns = { @JoinColumn(name = "movieid") },
+            inverseJoinColumns = { @JoinColumn(name = "genreid") })
+    private Set<Genre> genres;
 
     public Movie() {
     }
@@ -63,7 +65,6 @@ public class Movie {
         this.duration = duration;
         this.actors = actors;
         this.directors = directors;
-        this.genres = genres;
     }
 
     public Integer getId() {

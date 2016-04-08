@@ -42,6 +42,10 @@ public class ActorDAO {
         return session.get(Actor.class, id);
     }
 
+    public QueryResult getByIdNoSession(int id) {
+        return commonDAO.getByIdNoSession(id, Actor.class);
+    }
+
     public QueryResult listAll() {
         return commonDAO.listAll(Actor.class);
     }

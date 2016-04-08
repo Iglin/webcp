@@ -37,6 +37,10 @@ public class MovieDAO {
         return commonDAO.getById(id, Movie.class);
     }
 
+    public QueryResult getByIdNoSession(int id) {
+        return commonDAO.getByIdNoSession(id, Movie.class);
+    }
+
     public Movie getById(int id, Session session) {
         return session.get(Movie.class, id);
     }
@@ -51,7 +55,7 @@ public class MovieDAO {
             Criteria criteria = session.createCriteria(Movie.class);
             criteria.add(Restrictions.ilike("title", "%" + title + "%"));
             list = criteria.list();
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             return new QueryResult(false, e.getMessage());
         }
         return new QueryResult(true, list);
@@ -64,7 +68,7 @@ public class MovieDAO {
             criteria.createAlias("actors", "actor");
             criteria.add(Restrictions.ilike("actor.name", "%" + actorsName + "%"));
             list = criteria.list();
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             return new QueryResult(false, e.getMessage());
         }
         return new QueryResult(true, list);
@@ -77,7 +81,7 @@ public class MovieDAO {
             criteria.createAlias("directors", "director");
             criteria.add(Restrictions.ilike("director.name", "%" + director + "%"));
             list = criteria.list();
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             return new QueryResult(false, e.getMessage());
         }
         return new QueryResult(true, list);
@@ -90,7 +94,7 @@ public class MovieDAO {
             criteria.createAlias("genres", "genre");
             criteria.add(Restrictions.ilike("genre.name", "%" + genre + "%"));
             list = criteria.list();
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             return new QueryResult(false, e.getMessage());
         }
         return new QueryResult(true, list);
@@ -103,7 +107,7 @@ public class MovieDAO {
             criteria.createAlias("countries", "country");
             criteria.add(Restrictions.ilike("country.name", "%" + country + "%"));
             list = criteria.list();
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             return new QueryResult(false, e.getMessage());
         }
         return new QueryResult(true, list);

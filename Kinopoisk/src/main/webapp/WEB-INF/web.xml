@@ -85,9 +85,89 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>editor_movies.jsp</servlet-name>
-        <url-pattern>/editor_movies</url-pattern>
+        <url-pattern>/editor_movies/show</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>editor_movies.edit</servlet-name>
+        <servlet-class>com.kinopoisk.controller.MovieEditorController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor_movies.edit</servlet-name>
+        <url-pattern>/editor_movies/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editor_actors.jsp</servlet-name>
+        <jsp-file>/view/editor_actors.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor_actors.jsp</servlet-name>
+        <url-pattern>/editor_actors/show</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editor_actors.edit</servlet-name>
+        <servlet-class>com.kinopoisk.controller.ActorEditorController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor_actors.edit</servlet-name>
+        <url-pattern>/editor_actors/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editor_directors.edit</servlet-name>
+        <servlet-class>com.kinopoisk.controller.DirectorEditorController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor_directors.edit</servlet-name>
+        <url-pattern>/editor_directors/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editor_directors.jsp</servlet-name>
+        <jsp-file>/view/editor_directors.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor_directors.jsp</servlet-name>
+        <url-pattern>/editor_directors/show</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editor_genres.edit</servlet-name>
+        <servlet-class>com.kinopoisk.controller.GenreEditorController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor_genres.edit</servlet-name>
+        <url-pattern>/editor_genres/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editor_genres.jsp</servlet-name>
+        <jsp-file>/view/editor_genres.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor_genres.jsp</servlet-name>
+        <url-pattern>/editor_genres/show</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editor_countries.edit</servlet-name>
+        <servlet-class>com.kinopoisk.controller.DirectorEditorController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor_countries.edit</servlet-name>
+        <url-pattern>/editor_countries/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editor_countries.jsp</servlet-name>
+        <jsp-file>/view/editor_countries.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editor_countries.jsp</servlet-name>
+        <url-pattern>/editor_countries/show</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>default</servlet-name>

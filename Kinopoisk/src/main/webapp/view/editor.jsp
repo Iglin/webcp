@@ -19,7 +19,7 @@
               <button class = "menu_btn" onclick="window.location.href=('/index')">Movies</button>
               <button class = "menu_btn" onclick="window.location.href=('/actors')">Actors</button>
               <button class = "menu_btn" onclick="window.location.href=('/directors')">Directors</button>
-              <!--button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button-->
+              <button class = "menu_btn" onclick="window.location.href=('/editor')">Editor</button>
           </td>
       </tr>
   </table>
@@ -48,29 +48,25 @@
           QueryResult queryResult;
           switch (option) {
               case "Movies":
-                  queryResult = new MovieDAO().listAll();
-                  request.setAttribute("queryResult", queryResult);
-                  showEditorPage(request, response, "/view/editor_movies.jsp");
+                  response.sendRedirect("editor_movies/show");
+                 // queryResult = new MovieDAO().listAll();
+                 // request.setAttribute("queryResult", queryResult);
+                 // showEditorPage(request, response, "/view/editor_movies.jsp");
                   break;
               case "Actors":
-                  queryResult = new ActorDAO().listAll();
-                  request.setAttribute("queryResult", queryResult);
-                  showEditorPage(request, response, "/view/editor_actors.jsp");
+                  response.sendRedirect("editor_actors/show");
+                 // queryResult = new ActorDAO().listAll();
+                 // request.setAttribute("queryResult", queryResult);
+                 // showEditorPage(request, response, "/view/editor_actors.jsp");
                   break;
               case "Directors":
-                  queryResult = new DirectorDAO().listAll();
-                  request.setAttribute("queryResult", queryResult);
-                  showEditorPage(request, response, "/view/editor_directors.jsp");
+                  response.sendRedirect("editor_directors/show");
                   break;
               case "Genres":
-                  queryResult = new GenreDAO().listAll();
-                  request.setAttribute("queryResult", queryResult);
-                  showEditorPage(request, response, "/view/editor_genres.jsp");
+                  response.sendRedirect("editor_genres/show");
                   break;
               case "Countries":
-                  queryResult = new CountryDAO().listAll();
-                  request.setAttribute("queryResult", queryResult);
-                  showEditorPage(request, response, "/view/editor_countries.jsp");
+                  response.sendRedirect("editor_countries/show");
                   break;
           }
       }

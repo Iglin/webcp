@@ -21,10 +21,10 @@ public class Director {
     private Date dateOfBirth;
     @Column(name = "pic")
     private String pictureURL;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "countryid")
     private Country country;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.PERSIST)
     @JoinTable(name = "moviedirectors", joinColumns = { @JoinColumn(name = "directorid") },
             inverseJoinColumns = { @JoinColumn(name = "movieid") })
     private Set<Movie> movies;
