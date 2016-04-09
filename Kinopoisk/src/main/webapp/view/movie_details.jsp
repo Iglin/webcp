@@ -2,7 +2,8 @@
 <%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.*" %>
 <%@ page import="org.hibernate.Session" %>
-<%@ page import="java.util.Set" %><%--
+<%@ page import="java.util.Set" %>
+<%@ page import="com.kinopoisk.controller.MainController" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 25.03.2016
@@ -10,6 +11,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%!
+    MainController mainController = MainController.getInstance();
+%>
 <html>
 <head>
     <title>Kinopoisk</title>
@@ -122,14 +126,10 @@
 
 <%
     } else {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
-        request.setAttribute("errorMessage", queryResult.getErrorMessage());
-        dispatcher.forward(request, response);
+        mainController.showErrorPage(request, response, queryResult.getErrorMessage());
     }
-    } catch (ExceptionInInitializerError e) {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
-        request.setAttribute("errorMessage", "Could not set database session.");
-        dispatcher.forward(request, response);
+    } catch (Exception e) {
+        mainController.showErrorPage(request, response, "Could not set database session.");
     }
 }
 %>

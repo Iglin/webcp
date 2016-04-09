@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Error</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/main.css">
 </head>
 <body>
 <!--form action="LoginController" method="post">
