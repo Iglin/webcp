@@ -47,28 +47,57 @@
   %>
 
   <form method="post" action="/editor_actors/edit">
-      Name : <input type="text" name="name" id = "input_name" class="required"> <br>
-      Picture URL : <input type="text" name="pic" id = "input_pic" class="required"> <br>
-      Date of Birth : <input type="date" name="dob" id = "input_date"> <br>
-      <br>
-      Country : <br>
-      <select name="country">
-          <%
-              QueryResult queryResult = countryDAO.listAll();
-              if (queryResult.isSuccess()) {
-                  List<Country> countries = (List<Country>) queryResult.getResult();
-                  for (Country country : countries) {
-          %>
-          <option id="<%=country.getId()%>">
-              <%=country.getName()%>
-          </option>
-          <%
-                  }
-              } else {
-                  showErrorPage(request, response, queryResult.getErrorMessage());
-              }
-          %>
-      </select>
+      <table id="table_editor">
+          <tr>
+              <td>
+                  Name :
+              </td>
+              <td>
+                  <input type="text" name="name" id = "input_name" class="required">
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Picture URL :
+              </td>
+              <td>
+                  <input type="text" name="pic" id = "input_pic" class="required">
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Date of Birth :
+              </td>
+              <td>
+                  <input type="date" name="dob" id = "input_date">
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Country :
+              </td>
+              <td>
+                  <select name="country" id="country_select">
+                      <%
+                          QueryResult queryResult = countryDAO.listAll();
+                          if (queryResult.isSuccess()) {
+                              List<Country> countries = (List<Country>) queryResult.getResult();
+                              for (Country country : countries) {
+                      %>
+                      <option id="<%=country.getId()%>">
+                          <%=country.getName()%>
+                      </option>
+                      <%
+                              }
+                          } else {
+                              showErrorPage(request, response, queryResult.getErrorMessage());
+                          }
+                      %>
+                  </select>
+              </td>
+          </tr>
+      </table> <br>
+
       <br><br>
       Please, choose movies with this actor: <br>
       <table>

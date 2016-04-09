@@ -99,3 +99,22 @@ h2, h3 {
     background: mediumpurple;
     border-color: rebeccapurple;
 }
+
+#table_editor {
+    font-size: 18pt;
+    color: purple;
+}
+
+#input_date, #input_name, #input_pic, #input_poster,  #input_title, #input_tagline, #country_select  {
+    width: 275px;
+    font-size: 14pt;
+}
+
+#input_age, #input_duration, #input_rating {
+    width: 50px;
+    font-size: 14pt;
+}
+
+textarea {
+    width: 480px;
+}

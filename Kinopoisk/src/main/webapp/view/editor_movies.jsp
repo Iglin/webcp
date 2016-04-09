@@ -44,7 +44,7 @@
   %>
 
   <form method="post" action="/editor_movies/edit">
-      <table>
+      <table id="table_editor">
           <tr>
               <td>
                   Title :
@@ -53,15 +53,58 @@
                   <input type="text" name="title" id = "input_title" class="required">
               </td>
           </tr>
+          <tr>
+              <td>
+                  Tagline :
+              </td>
+              <td>
+                  <input type="text" name="tagline" id = "input_tagline">
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Poster URL :
+              </td>
+              <td>
+                  <input type="text" name="poster" id = "input_poster" class="required">
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Release Date :
+              </td>
+              <td>
+                  <input type="date" name="date" id = "input_date">
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Rating :
+              </td>
+              <td>
+                  <input type="number" step="0.1" min="0" max="10" name="rating" id = "input_rating">
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Age Rating :
+              </td>
+              <td>
+                  <input type="number" min="0" max="18" name="age" id = "input_age">+
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Duration (minutes) :
+              </td>
+              <td>
+                  <input type="number" min="1" max="500" name="duration" id = "input_duration">
+              </td>
+          </tr>
       </table>
-      Tagline : <input type="text" name="tagline" id = "input_tagline"> <br>
-      Poster URL : <input type="text" name="poster" id = "input_poster" class="required"> <br>
-      Release Date : <input type="date" name="date" id = "input_date"> <br>
       Description : <br>
       <textarea id="text_descr" name="description" cols="40" rows="5" style="resize: none" class="required"></textarea> <br>
-      Rating : <input type="number" step="0.1" min="0" max="10" name="rating" id = "input_rating"> <br>
-      Age Rating : <input type="number" min="0" max="18" name="age" id = "input_age">+ <br>
-      Duration (minutes) : <input type="number" min="1" max="500" name="duration" id = "input_duration"> <br>
+
       <br>
       Please, choose countries for this movie: <br>
       <table>
