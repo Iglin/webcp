@@ -1,22 +1,17 @@
 package com.kinopoisk.controller;
 
-import com.kinopoisk.dao.*;
-import com.kinopoisk.model.Actor;
+import com.kinopoisk.dao.CountryDAO;
+import com.kinopoisk.dao.DirectorDAO;
+import com.kinopoisk.dao.QueryResult;
 import com.kinopoisk.model.Country;
 import com.kinopoisk.model.Director;
-import com.kinopoisk.model.Movie;
-import org.hibernate.Session;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by user on 08.04.2016.

@@ -40,6 +40,11 @@ public class CountryDAO {
         return session.get(Country.class, id);
     }
 
+
+    public QueryResult getByIdNoSession(int id) {
+        return commonDAO.getByIdNoSession(id, Country.class);
+    }
+
     public QueryResult getByName(String countryName) {
         try (Session session = openSession()) {
             List<Country> list = session.createCriteria(Country.class)

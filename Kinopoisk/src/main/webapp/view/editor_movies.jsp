@@ -1,6 +1,6 @@
 <%@ page import="com.kinopoisk.dao.*" %>
 <%@ page import="com.kinopoisk.model.*" %>
-<%@ page import="java.util.*" %><%--
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 16.02.2016
@@ -44,7 +44,16 @@
   %>
 
   <form method="post" action="/editor_movies/edit">
-      Title : <input type="text" name="title" id = "input_title" class="required"> <br>
+      <table>
+          <tr>
+              <td>
+                  Title :
+              </td>
+              <td>
+                  <input type="text" name="title" id = "input_title" class="required">
+              </td>
+          </tr>
+      </table>
       Tagline : <input type="text" name="tagline" id = "input_tagline"> <br>
       Poster URL : <input type="text" name="poster" id = "input_poster" class="required"> <br>
       Release Date : <input type="date" name="date" id = "input_date"> <br>
@@ -143,7 +152,8 @@
       </table>
       <input type="submit" name = "save" value="Save" id = "save_btn"/>
       <br>
-
+      <br>
+      <h2>Delete: </h2>
       <label>
           <select name="select">
               <%
@@ -159,7 +169,7 @@
               %>
           </select>
       </label>
-      <label><input type="submit" name="delete" value="Delete"></label>
+      <label><input type="submit" name="delete" value="Delete" id="del_btn"></label>
   </form>
   <script src="/resources/js/movies.js"></script>
   </body>

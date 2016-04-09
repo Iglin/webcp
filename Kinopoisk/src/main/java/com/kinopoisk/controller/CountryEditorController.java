@@ -1,8 +1,8 @@
 package com.kinopoisk.controller;
 
-import com.kinopoisk.dao.GenreDAO;
+import com.kinopoisk.dao.CountryDAO;
 import com.kinopoisk.dao.QueryResult;
-import com.kinopoisk.model.Genre;
+import com.kinopoisk.model.Country;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,23 +13,23 @@ import java.io.IOException;
 /**
  * Created by user on 08.04.2016.
  */
-public class GenreEditorController extends HttpServlet {
+public class CountryEditorController extends HttpServlet {
     private MainController mainController = MainController.getInstance();
-    private GenreDAO genreDAO = new GenreDAO();
+    private CountryDAO countryDAO = new CountryDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("save") != null) {
             QueryResult queryResult = save(req, resp);
             if (queryResult.isSuccess()) {
-                resp.sendRedirect("/editor_genres/show");
+                resp.sendRedirect("/editor_countries/show");
             } else {
-                mainController.showErrorPage(req, resp, "Could not save genre.");
+                mainController.showErrorPage(req, resp, "Could not save country.");
             }
         } else if (req.getParameter("delete") != null) {
             QueryResult queryResult = delete(req);
             if (queryResult.isSuccess()) {
-                resp.sendRedirect("/editor_genres/show");
+                resp.sendRedirect("/editor_countries/show");
             } else {
                 mainController.showErrorPage(req, resp, queryResult.getErrorMessage());
             }
@@ -37,28 +37,28 @@ public class GenreEditorController extends HttpServlet {
     }
 
     private QueryResult save(HttpServletRequest request, HttpServletResponse response) {
-        Genre genre = new Genre();
-        genre.setName(request.getParameter("name"));
+        Country country = new Country();
+        country.setName(request.getParameter("name"));
 
-        genre.setMovies(mainController.collectMoviesFromRequest(request, response));
-        return genreDAO.add(genre);
+        country.setMovies(mainController.collectMoviesFromRequest(request, response));
+        return countryDAO.add(country);
     }
 
     private QueryResult delete(HttpServletRequest req) {
         String directorToDelete = req.getParameter("select");
         if (directorToDelete != null) {
-            QueryResult queryResult = genreDAO.getByIdNoSession(Integer.parseInt(directorToDelete.split(" ")[0]));
+            QueryResult queryResult = countryDAO.getByIdNoSession(Integer.parseInt(directorToDelete.split(" ")[0]));
             if (queryResult.isSuccess()) {
                 if (queryResult.getResult() != null) {
-                    return genreDAO.delete((Genre) queryResult.getResult());
+                    return countryDAO.delete((Country) queryResult.getResult());
                 } else {
-                    return new QueryResult(false, "No genre to delete");
+                    return new QueryResult(false, "No country to delete");
                 }
             } else {
                 return queryResult;
             }
         } else {
-            return new QueryResult(false, "No genre to delete");
+            return new QueryResult(false, "No country to delete");
         }
     }
 }

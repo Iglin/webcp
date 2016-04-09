@@ -3,7 +3,6 @@ package com.kinopoisk.dao;
 import com.kinopoisk.model.Actor;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;

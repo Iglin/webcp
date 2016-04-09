@@ -1,6 +1,8 @@
 package com.kinopoisk.controller;
 
-import com.kinopoisk.dao.*;
+import com.kinopoisk.dao.ActorDAO;
+import com.kinopoisk.dao.CountryDAO;
+import com.kinopoisk.dao.QueryResult;
 import com.kinopoisk.model.Actor;
 import com.kinopoisk.model.Country;
 

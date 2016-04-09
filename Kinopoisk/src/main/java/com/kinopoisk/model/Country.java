@@ -15,7 +15,7 @@ public class Country {
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "moviecountries", joinColumns = { @JoinColumn(name = "countyid") },
+    @JoinTable(name = "moviecountries", joinColumns = { @JoinColumn(name = "countryid") },
             inverseJoinColumns = { @JoinColumn(name = "movieid") })
     private Set<Movie> movies;
 

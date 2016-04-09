@@ -1,7 +1,10 @@
-<%@ page import="com.kinopoisk.dao.*" %>
-<%@ page import="com.kinopoisk.model.*" %>
-<%@ page import="java.util.*" %>
 <%@ page import="com.kinopoisk.controller.MainController" %>
+<%@ page import="com.kinopoisk.dao.GenreDAO" %>
+<%@ page import="com.kinopoisk.dao.MovieDAO" %>
+<%@ page import="com.kinopoisk.dao.QueryResult" %>
+<%@ page import="com.kinopoisk.model.Genre" %>
+<%@ page import="com.kinopoisk.model.Movie" %>
+<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -35,7 +38,7 @@
   %>
 
   <form method="post" action="/editor_genres/edit">
-      Name : <input type="text" name="name" id = "input_title" class="required">
+      Name : <input type="text" name="name" id = "input_name" class="required">
       <br><br>
       Movies in this genre: <br>
       <table>
@@ -63,6 +66,8 @@
       <br>
       <input type="submit" name = "save" value="Save" id = "save_btn"/>
       <br>
+      <br>
+      <h2>Delete: </h2>
 
       <label>
           <select name="select">
@@ -79,8 +84,8 @@
               %>
           </select>
       </label>
-      <label><input type="submit" name="delete" value="Delete"></label>
+      <label><input type="submit" name="delete" value="Delete" id="del_btn"></label>
   </form>
-  <script src="/resources/js/movies.js"></script>
+  <script src="/resources/js/simple.js"></script>
   </body>
 </html>

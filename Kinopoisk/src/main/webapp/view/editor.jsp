@@ -1,4 +1,4 @@
-<%@ page import="com.kinopoisk.dao.*" %>
+<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="java.io.IOException" %><%--
   Created by IntelliJ IDEA.
   User: user
@@ -24,13 +24,6 @@
       </tr>
   </table>
 
-  <%!
-      private void showEditorPage(HttpServletRequest request, HttpServletResponse response, String jspURL) throws ServletException, IOException {
-          RequestDispatcher dispatcher = request.getRequestDispatcher(jspURL);
-          dispatcher.forward(request, response);
-      }
-  %>
-
   <form action="/editor" method="post">
       Edit :
       <label for="option"></label><select name = "option" id = "option">
@@ -40,24 +33,17 @@
       <option>Genres</option>
       <option>Countries</option>
   </select>
-      <input type="submit" name = "choose" value="Choose" id = "choose"/>
+      <input type="submit" name = "choose" value="Choose"  id="del_btn"/>
   </form>
   <%
       if (request.getParameter("choose") != null) {
           String option = request.getParameter("option");
-          QueryResult queryResult;
           switch (option) {
               case "Movies":
                   response.sendRedirect("editor_movies/show");
-                 // queryResult = new MovieDAO().listAll();
-                 // request.setAttribute("queryResult", queryResult);
-                 // showEditorPage(request, response, "/view/editor_movies.jsp");
                   break;
               case "Actors":
                   response.sendRedirect("editor_actors/show");
-                 // queryResult = new ActorDAO().listAll();
-                 // request.setAttribute("queryResult", queryResult);
-                 // showEditorPage(request, response, "/view/editor_actors.jsp");
                   break;
               case "Directors":
                   response.sendRedirect("editor_directors/show");

@@ -1,8 +1,9 @@
+<%@ page import="com.kinopoisk.dao.ActorDAO" %>
 <%@ page import="com.kinopoisk.dao.QueryResult" %>
+<%@ page import="com.kinopoisk.model.Actor" %>
+<%@ page import="com.kinopoisk.model.Movie" %>
 <%@ page import="org.hibernate.Session" %>
-<%@ page import="java.util.Set" %>
-<%@ page import="com.kinopoisk.model.*" %>
-<%@ page import="com.kinopoisk.dao.ActorDAO" %><%--
+<%@ page import="java.util.Set" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 25.03.2016
@@ -22,7 +23,7 @@
             <button class = "menu_btn" onclick="window.location.href=('/index')">Movies</button>
             <button class = "menu_btn" onclick="window.location.href=('/actors')">Actors</button>
             <button class = "menu_btn" onclick="window.location.href=('/directors')">Directors</button>
-            <!--button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button-->
+            <button class = "menu_btn" onclick="window.location.href=('/editor')">Editor</button>
         </td>
     </tr>
 </table>
@@ -41,7 +42,9 @@
 <h2><%=actor.getName()%></h2>
 <div><img class="dir_pic" src="<%=actor.getPictureURL()%>"/></div>
 <h3>Country: </h3><%=actor.getCountry().getName()%>
-<h3>Date of birth: </h3><%=actor.getDateOfBirth()%>
+<% if (actor.getDateOfBirth() != null) { %>
+    <h3>Date of birth: </h3><%=actor.getDateOfBirth()%>
+<% } %>
     <h3>Movies: </h3>
     <table id="res_table">
         <tr>

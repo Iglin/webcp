@@ -153,7 +153,7 @@
 
     <servlet>
         <servlet-name>editor_countries.edit</servlet-name>
-        <servlet-class>com.kinopoisk.controller.DirectorEditorController</servlet-class>
+        <servlet-class>com.kinopoisk.controller.CountryEditorController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>editor_countries.edit</servlet-name>

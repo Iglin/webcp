@@ -1,5 +1,5 @@
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.dao.DirectorDAO" %>
+<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.Director" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
@@ -21,7 +21,7 @@
               <button class = "menu_btn" onclick="window.location.href=('/index')">Movies</button>
               <button class = "menu_btn" onclick="window.location.href=('/actors')">Actors</button>
               <button class = "menu_btn" onclick="window.location.href=('/directors')">Directors</button>
-              <!--button class = "menu_btn" onclick="window.location.href=('/search')">Advanced Search</button-->
+              <button class = "menu_btn" onclick="window.location.href=('/editor')">Editor</button>
           </td>
       </tr>
   </table>

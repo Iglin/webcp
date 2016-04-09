@@ -1,6 +1,5 @@
 package com.kinopoisk.dao;
 
-import com.kinopoisk.model.Actor;
 import com.kinopoisk.model.Director;
 import org.hibernate.Criteria;
 import org.hibernate.Session;

@@ -1,18 +1,10 @@
 <%@ page import="com.kinopoisk.controller.MainController" %>
 <%@ page import="com.kinopoisk.dao.CountryDAO" %>
-<%@ page import="com.kinopoisk.dao.DirectorDAO" %>
 <%@ page import="com.kinopoisk.dao.MovieDAO" %>
 <%@ page import="com.kinopoisk.dao.QueryResult" %>
-<%@ page import="com.kinopoisk.model.Country" %>
-<%@ page import="com.kinopoisk.model.Director" %>
 <%@ page import="com.kinopoisk.model.Movie" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 16.02.2016
-  Time: 12:15
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.kinopoisk.model.Country" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
@@ -33,43 +25,21 @@
 
   <%!
       private CountryDAO countryDAO = new CountryDAO();
-      private DirectorDAO directorDAO = new DirectorDAO();
       private MovieDAO movieDAO = new MovieDAO();
 
       private MainController mainController = MainController.getInstance();
   %>
 
-  <form method="post" action="/editor_directors/edit">
-      Name : <input type="text" name="name" id = "input_name" class="required"> <br>
-      Picture URL : <input type="text" name="pic" id = "input_pic" class="required"> <br>
-      Date of Birth : <input type="date" name="dob" id = "input_date"> <br>
-      <br>
-      Country : <br>
-      <select name="country">
-          <%
-              QueryResult queryResult = countryDAO.listAll();
-              if (queryResult.isSuccess()) {
-                  List<Country> countries = (List<Country>) queryResult.getResult();
-                  for (Country country : countries) {
-          %>
-          <option id="<%=country.getId()%>">
-              <%=country.getName()%>
-          </option>
-          <%
-                  }
-              } else {
-                      mainController.showErrorPage(request, response, queryResult.getErrorMessage());
-              }
-          %>
-      </select>
+  <form method="post" action="/editor_countries/edit">
+      Name : <input type="text" name="name" id = "input_name" class="required">
       <br><br>
-      Please, choose directed by this director movies: <br>
+      Filmed in this country: <br>
       <table>
           <tr>
               <th></th><th>Title</th><th>Poster</th>
           </tr>
           <%
-              queryResult = movieDAO.listAll();
+              QueryResult queryResult = movieDAO.listAll();
               if (queryResult.isSuccess()) {
                   List<Movie> movies = (List<Movie>) queryResult.getResult();
                   for (Movie movie : movies) {
@@ -95,12 +65,12 @@
       <label>
           <select name="select">
               <%
-                  queryResult = directorDAO.listAll();
+                  queryResult = countryDAO.listAll();
                   if (queryResult.isSuccess()) {
-                      List<Director> allDirectors = (List<Director>) queryResult.getResult();
-                      for (Director director : allDirectors) {
+                      List<Country> countries = (List<Country>) queryResult.getResult();
+                      for (Country country : countries) {
               %>
-              <option><%=director.getId()%> <%=director.getName()%></option>
+              <option><%=country.getId()%> <%=country.getName()%></option>
               <%
                       }
                   }
@@ -109,6 +79,6 @@
       </label>
       <label><input type="submit" name="delete" value="Delete" id="del_btn"></label>
   </form>
-  <script src="/resources/js/person.js"></script>
+  <script src="/resources/js/simple.js"></script>
   </body>
 </html>
