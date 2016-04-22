@@ -1,7 +1,7 @@
 <%@ page import="com.kinopoisk.dao.ActorDAO" %>
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.Actor" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%--
   Created by IntelliJ IDEA.
   User: user
   Date: 16.02.2016
@@ -36,28 +36,26 @@
       <input type="submit" name = "search" value="Search"/>
   </form>
   <%
-      QueryResult queryResult = null;
+      List<Actor> actors = null;
       if (request.getParameter("search") != null) {
           String option = request.getParameter("option");
           switch (option) {
               case "Actor's name":
-                  queryResult = new ActorDAO().listByName(request.getParameter("input_par"));
+                  actors = new ActorDAO().listByName(request.getParameter("input_par"));
                   break;
               case "Movie title":
-                  queryResult = new ActorDAO().listByMovie(request.getParameter("input_par"));
+                  actors = new ActorDAO().listByMovie(request.getParameter("input_par"));
                   break;
               case "Country":
-                  queryResult = new ActorDAO().listByCountry(request.getParameter("input_par"));
+                  actors = new ActorDAO().listByCountry(request.getParameter("input_par"));
                   break;
           }
       } else {
-          queryResult = new ActorDAO().listAll();
+          actors = new ActorDAO().listAll();
       }
-      if (queryResult.isSuccess()) {
   %>
   <table>
       <%
-          List<Actor> actors = (List<Actor>) queryResult.getResult();
           int i = 0;
           for (Actor actor : actors) {
               if (i == 0) {
@@ -79,12 +77,5 @@
               }
       %>
   </table>
-  <%
-          } else {
-              RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
-              request.setAttribute("errorMessage", queryResult.getErrorMessage());
-              dispatcher.forward(request, response);
-          }
-      %>
   </body>
 </html>

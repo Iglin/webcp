@@ -1,7 +1,5 @@
-<%@ page import="com.kinopoisk.controller.MainController" %>
 <%@ page import="com.kinopoisk.dao.GenreDAO" %>
 <%@ page import="com.kinopoisk.dao.MovieDAO" %>
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.Genre" %>
 <%@ page import="com.kinopoisk.model.Movie" %>
 <%@ page import="java.util.List" %>
@@ -33,8 +31,6 @@
   <%!
       private GenreDAO genreDAO = new GenreDAO();
       private MovieDAO movieDAO = new MovieDAO();
-
-      private MainController mainController = MainController.getInstance();
   %>
 
   <form method="post" action="/editor_genres/edit">
@@ -46,10 +42,8 @@
               <th></th><th>Title</th><th>Poster</th>
           </tr>
           <%
-              QueryResult queryResult = movieDAO.listAll();
-              if (queryResult.isSuccess()) {
-                  List<Movie> movies = (List<Movie>) queryResult.getResult();
-                  for (Movie movie : movies) {
+              List<Movie> movies = movieDAO.listAll();
+              for (Movie movie : movies) {
           %>
           <tr>
               <td><input type="checkbox" name="movie<%=movie.getId()%>"></td>
@@ -57,9 +51,6 @@
               <td><img src="<%=movie.getPosterURL()%>"></td>
           </tr>
           <%
-                  }
-              } else {
-                  mainController.showErrorPage(request, response, queryResult.getErrorMessage());
               }
           %>
       </table>
@@ -72,14 +63,11 @@
       <label>
           <select name="select">
               <%
-                  queryResult = genreDAO.listAll();
-                  if (queryResult.isSuccess()) {
-                      List<Genre> genres = (List<Genre>) queryResult.getResult();
-                      for (Genre genre : genres) {
+                  List<Genre> genres = genreDAO.listAll();
+                  for (Genre genre : genres) {
               %>
               <option><%=genre.getId()%> <%=genre.getName()%></option>
               <%
-                      }
                   }
               %>
           </select>

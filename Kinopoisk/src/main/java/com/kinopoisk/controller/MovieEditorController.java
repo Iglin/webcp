@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -26,44 +27,19 @@ public class MovieEditorController extends HttpServlet {
 
     private MainController mainController = MainController.getInstance();
 
-    private QueryResult delete(HttpServletRequest req) {
-        String movieToDelete = req.getParameter("select");
-        if (movieToDelete != null) {
-            QueryResult queryResult = movieDAO.getByIdNoSession(Integer.parseInt(movieToDelete.split(" ")[0]));
-            if (queryResult.isSuccess()) {
-                if (queryResult.getResult() != null) {
-                    return movieDAO.delete((Movie) queryResult.getResult());
-                } else {
-                    return new QueryResult(false, "No movie to delete");
-                }
-            } else {
-                return queryResult;
-            }
-        } else {
-            return new QueryResult(false, "No movie to delete");
-        }
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         if (req.getParameter("save") != null) {
-            QueryResult queryResult = saveMovie(req, resp);
-            if (queryResult.isSuccess()) {
-                resp.sendRedirect("/editor_movies/show");
-            } else {
-                mainController.showErrorPage(req, resp, queryResult.getErrorMessage());
-            }
+            saveMovie(req, resp);
+            resp.sendRedirect("/editor_movies/show");
         } else if (req.getParameter("delete") != null) {
-            QueryResult queryResult = delete(req);
-            if (queryResult.isSuccess()) {
-                resp.sendRedirect("/editor_movies/show");
-            } else {
-                mainController.showErrorPage(req, resp, queryResult.getErrorMessage());
-            }
+            delete(req);
+            resp.sendRedirect("/editor_movies/show");
         }
     }
 
-    private QueryResult saveMovie(HttpServletRequest request, HttpServletResponse response) {
+    private void saveMovie(HttpServletRequest request, HttpServletResponse response) {
         Movie movie = new Movie();
         movie.setTitle(request.getParameter("title"));
         String parameter = request.getParameter("tagline");
@@ -101,17 +77,28 @@ public class MovieEditorController extends HttpServlet {
                 String parameterName = (String) enumeration.nextElement();
                 if (parameterName.contains("genre")) {
                     id = Integer.parseInt(parameterName.replace("genre", ""));
-                    Genre genre = genreDAO.getById(id, hibernateSession);
-                    genres.add(genre);
+                    Optional<Genre> genre = genreDAO.getById(id, hibernateSession);
+                    if (genre.isPresent()) {
+                        genres.add(genre.get());
+                    }
                 } else if (parameterName.contains("country")) {
                     id = Integer.parseInt(parameterName.replace("country", ""));
-                    countries.add(countryDAO.getById(id, hibernateSession));
+                    Optional<Country> country = countryDAO.getById(id, hibernateSession);
+                    if (country.isPresent()) {
+                        countries.add(country.get());
+                    }
                 } else if (parameterName.contains("actor")) {
                     id = Integer.parseInt(parameterName.replace("actor", ""));
-                    actors.add(actorDAO.getById(id, hibernateSession));
+                    Optional<Actor> actor = actorDAO.getById(id, hibernateSession);
+                    if (actor.isPresent()) {
+                        actors.add(actor.get());
+                    }
                 } else if (parameterName.contains("director")) {
                     id = Integer.parseInt(parameterName.replace("director", ""));
-                    directors.add(directorDAO.getById(id, hibernateSession));
+                    Optional<Director> director = directorDAO.getById(id, hibernateSession);
+                    if (director.isPresent()) {
+                        directors.add(director.get());
+                    }
                 }
             }
         } catch (Exception e) {
@@ -122,6 +109,16 @@ public class MovieEditorController extends HttpServlet {
         movie.setActors(actors);
         movie.setDirectors(directors);
 
-        return movieDAO.add(movie);
+        movieDAO.add(movie);
+    }
+
+    private void delete(HttpServletRequest req) {
+        String movieToDelete = req.getParameter("select");
+        if (movieToDelete != null) {
+            Optional<Movie> queryResult = movieDAO.getByIdNoSession(Integer.parseInt(movieToDelete.split(" ")[0]));
+            if (queryResult.isPresent()) {
+                movieDAO.delete(queryResult.get());
+            }
+        }
     }
 }

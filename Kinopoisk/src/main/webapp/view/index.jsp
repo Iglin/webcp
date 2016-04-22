@@ -1,5 +1,4 @@
 <%@ page import="com.kinopoisk.dao.MovieDAO" %>
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.Movie" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
@@ -38,7 +37,7 @@
       <input type="submit" name = "search" value="Search" id = "search"/>
   </form>
   <%
-      QueryResult queryResult = null;
+      List<Movie> queryResult = null;
       if (request.getParameter("search") != null) {
           String option = request.getParameter("option");
           switch (option) {
@@ -61,13 +60,11 @@
       } else {
           queryResult = new MovieDAO().listAll();
       }
-      if (queryResult.isSuccess()) {
   %>
   <table id = "res_table">
       <tr><th class="movie_title">Title</th><th>Poster</th><th>Description</th></tr>
   <%
-          List<Movie> movies = (List<Movie>) queryResult.getResult();
-          for (Movie movie : movies) {
+          for (Movie movie : queryResult) {
   %>
       <tr>
           <td class="movie_title"><a href="/movie_details/show?id=<%=movie.getId()%>"><%=movie.getTitle()%></a></td>
@@ -75,13 +72,8 @@
           <td class="descr"><%=movie.getDetails()%></td>
       </tr>
       <%
-              }
-      } else {
-                  RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
-                  request.setAttribute("errorMessage", queryResult.getErrorMessage());
-                  dispatcher.forward(request, response);
-      }
-  %>
+          }
+      %>
   </table>
   </body>
 </html>

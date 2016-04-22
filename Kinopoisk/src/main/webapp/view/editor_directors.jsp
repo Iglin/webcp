@@ -1,8 +1,6 @@
-<%@ page import="com.kinopoisk.controller.MainController" %>
 <%@ page import="com.kinopoisk.dao.CountryDAO" %>
 <%@ page import="com.kinopoisk.dao.DirectorDAO" %>
 <%@ page import="com.kinopoisk.dao.MovieDAO" %>
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.Country" %>
 <%@ page import="com.kinopoisk.model.Director" %>
 <%@ page import="com.kinopoisk.model.Movie" %>
@@ -35,8 +33,6 @@
       private CountryDAO countryDAO = new CountryDAO();
       private DirectorDAO directorDAO = new DirectorDAO();
       private MovieDAO movieDAO = new MovieDAO();
-
-      private MainController mainController = MainController.getInstance();
   %>
 
   <form method="post" action="/editor_directors/edit">
@@ -72,18 +68,13 @@
               <td>
                   <select name="country" id="country_select">
                       <%
-                          QueryResult queryResult = countryDAO.listAll();
-                          if (queryResult.isSuccess()) {
-                              List<Country> countries = (List<Country>) queryResult.getResult();
-                              for (Country country : countries) {
+                          List<Country> countries = countryDAO.listAll();
+                          for (Country country : countries) {
                       %>
                       <option id="<%=country.getId()%>">
                           <%=country.getName()%>
                       </option>
                       <%
-                              }
-                          } else {
-                              mainController.showErrorPage(request, response, queryResult.getErrorMessage());
                           }
                       %>
                   </select>
@@ -98,10 +89,8 @@
               <th></th><th>Title</th><th>Poster</th>
           </tr>
           <%
-              queryResult = movieDAO.listAll();
-              if (queryResult.isSuccess()) {
-                  List<Movie> movies = (List<Movie>) queryResult.getResult();
-                  for (Movie movie : movies) {
+              List<Movie> movies = movieDAO.listAll();
+              for (Movie movie : movies) {
           %>
           <tr>
               <td><input type="checkbox" name="movie<%=movie.getId()%>"></td>
@@ -109,9 +98,6 @@
               <td><img src="<%=movie.getPosterURL()%>"></td>
           </tr>
           <%
-                  }
-              } else {
-                  mainController.showErrorPage(request, response, queryResult.getErrorMessage());
               }
           %>
       </table>
@@ -124,14 +110,11 @@
       <label>
           <select name="select">
               <%
-                  queryResult = directorDAO.listAll();
-                  if (queryResult.isSuccess()) {
-                      List<Director> allDirectors = (List<Director>) queryResult.getResult();
-                      for (Director director : allDirectors) {
+                  List<Director> directors = directorDAO.listAll();
+                  for (Director director : directors) {
               %>
               <option><%=director.getId()%> <%=director.getName()%></option>
               <%
-                      }
                   }
               %>
           </select>

@@ -1,7 +1,6 @@
 package com.kinopoisk.controller;
 
 import com.kinopoisk.dao.CountryDAO;
-import com.kinopoisk.dao.QueryResult;
 import com.kinopoisk.model.Country;
 
 import javax.servlet.ServletException;
@@ -9,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Created by user on 08.04.2016.
@@ -19,46 +19,31 @@ public class CountryEditorController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         if (req.getParameter("save") != null) {
-            QueryResult queryResult = save(req, resp);
-            if (queryResult.isSuccess()) {
-                resp.sendRedirect("/editor_countries/show");
-            } else {
-                mainController.showErrorPage(req, resp, "Could not save country.");
-            }
+            save(req, resp);
+            resp.sendRedirect("/editor_countries/show");
         } else if (req.getParameter("delete") != null) {
-            QueryResult queryResult = delete(req);
-            if (queryResult.isSuccess()) {
-                resp.sendRedirect("/editor_countries/show");
-            } else {
-                mainController.showErrorPage(req, resp, queryResult.getErrorMessage());
-            }
+            delete(req);
+            resp.sendRedirect("/editor_countries/show");
         }
     }
 
-    private QueryResult save(HttpServletRequest request, HttpServletResponse response) {
+    private void save(HttpServletRequest request, HttpServletResponse response) {
         Country country = new Country();
         country.setName(request.getParameter("name"));
 
         country.setMovies(mainController.collectMoviesFromRequest(request, response));
-        return countryDAO.add(country);
+        countryDAO.add(country);
     }
 
-    private QueryResult delete(HttpServletRequest req) {
+    private void delete(HttpServletRequest req) {
         String directorToDelete = req.getParameter("select");
         if (directorToDelete != null) {
-            QueryResult queryResult = countryDAO.getByIdNoSession(Integer.parseInt(directorToDelete.split(" ")[0]));
-            if (queryResult.isSuccess()) {
-                if (queryResult.getResult() != null) {
-                    return countryDAO.delete((Country) queryResult.getResult());
-                } else {
-                    return new QueryResult(false, "No country to delete");
-                }
-            } else {
-                return queryResult;
+            Optional<Country> queryResult = countryDAO.getByIdNoSession(Integer.parseInt(directorToDelete.split(" ")[0]));
+            if (queryResult.isPresent()) {
+                countryDAO.delete(queryResult.get());
             }
-        } else {
-            return new QueryResult(false, "No country to delete");
         }
     }
 }

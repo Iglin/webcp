@@ -3,6 +3,9 @@ package com.kinopoisk.dao;
 import com.kinopoisk.model.Genre;
 import org.hibernate.Session;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Created by alexander on 27.02.16.
  */
@@ -17,31 +20,31 @@ public class GenreDAO {
         commonDAO.closeSession();
     }
 
-    public QueryResult add(Genre genre) {
+    public int add(Genre genre) {
         return commonDAO.add(genre);
     }
 
-    public QueryResult update(Genre genre) {
-        return commonDAO.update(genre);
+    public void update(Genre genre) {
+        commonDAO.update(genre);
     }
 
-    public QueryResult delete(Genre genre) {
-        return commonDAO.delete(genre);
+    public void delete(Genre genre) {
+        commonDAO.delete(genre);
     }
 
-    public QueryResult getById(int id) {
+    public Optional<Genre> getById(int id) {
         return commonDAO.getById(id, Genre.class);
     }
 
-    public Genre getById(int id, Session session) {
-        return session.get(Genre.class, id);
+    public Optional<Genre> getById(int id, Session session) {
+        return Optional.ofNullable(session.get(Genre.class, id));
     }
 
-    public QueryResult getByIdNoSession(int id) {
+    public Optional<Genre> getByIdNoSession(int id) {
         return commonDAO.getByIdNoSession(id, Genre.class);
     }
 
-    public QueryResult listAll() {
+    public List<Genre> listAll() {
         return commonDAO.listAll(Genre.class);
     }
 }

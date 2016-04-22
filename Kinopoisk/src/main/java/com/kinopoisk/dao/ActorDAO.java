@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by user on 27.02.2016.
@@ -21,70 +22,58 @@ public class ActorDAO {
         commonDAO.closeSession();
     }
 
-    public QueryResult add(Actor actor) {
+    public int add(Actor actor) {
         return commonDAO.add(actor);
     }
 
-    public QueryResult update(Actor actor) {
-        return commonDAO.update(actor);
+    public void update(Actor actor) {
+        commonDAO.update(actor);
     }
 
-    public QueryResult delete(Actor actor) {
-        return commonDAO.delete(actor);
+    public void delete(Actor actor) {
+        commonDAO.delete(actor);
     }
 
-    public QueryResult getById(int id) {
+    public Optional<Actor> getById(int id) {
         return commonDAO.getById(id, Actor.class);
     }
 
-    public Actor getById(int id, Session session) {
-        return session.get(Actor.class, id);
+    public Optional<Actor> getById(int id, Session session) {
+        return Optional.ofNullable(session.get(Actor.class, id));
     }
 
-    public QueryResult getByIdNoSession(int id) {
+    public Optional<Actor> getByIdNoSession(int id) {
         return commonDAO.getByIdNoSession(id, Actor.class);
     }
 
-    public QueryResult listAll() {
+    public List<Actor> listAll() {
         return commonDAO.listAll(Actor.class);
     }
 
-    public QueryResult listByName(String name) {
-        List<Actor> list;
+    public List<Actor> listByName(String name) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Criteria criteria = session.createCriteria(Actor.class);
             criteria.add(Restrictions.ilike("name", "%" + name + "%"));
-            list = criteria.list();
-        } catch (ExceptionInInitializerError e) {
-            return new QueryResult(false, e.getMessage());
+            return criteria.list();
         }
-        return new QueryResult(true, list);
     }
 
-    public QueryResult listByCountry(String country) {
-        List<Actor> list;
+    public List<Actor> listByCountry(String country) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Criteria criteria = session.createCriteria(Actor.class);
             criteria.createAlias("country", "c");
             criteria.add(Restrictions.ilike("c.name", "%" + country + "%"));
-            list = criteria.list();
-        } catch (ExceptionInInitializerError e) {
-            return new QueryResult(false, e.getMessage());
+            return criteria.list();
         }
-        return new QueryResult(true, list);
     }
 
-    public QueryResult listByMovie(String movie) {
-        List<Actor> list;
+    public List<Actor> listByMovie(String movie) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Criteria criteria = session.createCriteria(Actor.class);
             criteria.createAlias("movies", "movie");
             criteria.add(Restrictions.ilike("movie.title", "%" + movie + "%"));
             criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-            list = criteria.list();
-        } catch (ExceptionInInitializerError e) {
-            return new QueryResult(false, e.getMessage());
+            return criteria.list();
         }
-        return new QueryResult(true, list);
     }
 }

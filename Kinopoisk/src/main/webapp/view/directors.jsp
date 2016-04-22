@@ -1,5 +1,4 @@
 <%@ page import="com.kinopoisk.dao.DirectorDAO" %>
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.Director" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
@@ -36,7 +35,7 @@
       <input type="submit" name = "search" value="Search"/>
   </form>
   <%
-      QueryResult queryResult = null;
+      List<Director> queryResult = null;
       if (request.getParameter("search") != null) {
           String option = request.getParameter("option");
           switch (option) {
@@ -53,22 +52,15 @@
       } else {
           queryResult = new DirectorDAO().listAll();
       }
-      if (queryResult.isSuccess()) {
   %>
   <%
-      List<Director> directors = (List<Director>) queryResult.getResult();
-      for (Director director : directors) {
+      for (Director director : queryResult) {
   %>
   <div>
       <a class="actor_name" href="/director_details/show?id=<%=director.getId()%>"><%=director.getName()%></a><br>
       <a href="/director_details/show?id=<%=director.getId()%>"><img class="dir_pic" src="<%=director.getPictureURL()%>"/></a>
   </div>
   <%
-          }
-      } else {
-          RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
-          request.setAttribute("errorMessage", queryResult.getErrorMessage());
-          dispatcher.forward(request, response);
       }
   %>
   </body>

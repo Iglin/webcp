@@ -1,11 +1,11 @@
 <%@ page import="com.kinopoisk.dao.ActorDAO" %>
 <%@ page import="com.kinopoisk.dao.CountryDAO" %>
 <%@ page import="com.kinopoisk.dao.MovieDAO" %>
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.Actor" %>
 <%@ page import="com.kinopoisk.model.Country" %>
 <%@ page import="com.kinopoisk.model.Movie" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%--
   Created by IntelliJ IDEA.
   User: user
   Date: 16.02.2016
@@ -34,16 +34,6 @@
       private CountryDAO countryDAO = new CountryDAO();
       private ActorDAO actorDAO = new ActorDAO();
       private MovieDAO movieDAO = new MovieDAO();
-
-      private void showErrorPage(HttpServletRequest request, HttpServletResponse response, String errorMessage) {
-          RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
-          request.setAttribute("errorMessage", errorMessage);
-          try {
-              dispatcher.forward(request, response);
-          } catch (Exception e) {
-              e.printStackTrace();
-          }
-      }
   %>
 
   <form method="post" action="/editor_actors/edit">
@@ -79,18 +69,13 @@
               <td>
                   <select name="country" id="country_select">
                       <%
-                          QueryResult queryResult = countryDAO.listAll();
-                          if (queryResult.isSuccess()) {
-                              List<Country> countries = (List<Country>) queryResult.getResult();
-                              for (Country country : countries) {
+                          List<Country> countries = countryDAO.listAll();
+                          for (Country country : countries) {
                       %>
                       <option id="<%=country.getId()%>">
                           <%=country.getName()%>
                       </option>
                       <%
-                              }
-                          } else {
-                              showErrorPage(request, response, queryResult.getErrorMessage());
                           }
                       %>
                   </select>
@@ -105,10 +90,8 @@
               <th></th><th>Title</th><th>Poster</th>
           </tr>
           <%
-              queryResult = movieDAO.listAll();
-              if (queryResult.isSuccess()) {
-                  List<Movie> movies = (List<Movie>) queryResult.getResult();
-                  for (Movie movie : movies) {
+              List<Movie> movies = movieDAO.listAll();
+              for (Movie movie : movies) {
           %>
           <tr>
               <td><input type="checkbox" name="movie<%=movie.getId()%>"></td>
@@ -116,9 +99,6 @@
               <td><img src="<%=movie.getPosterURL()%>"></td>
           </tr>
           <%
-                  }
-              } else {
-                  showErrorPage(request, response, queryResult.getErrorMessage());
               }
           %>
       </table>
@@ -131,14 +111,11 @@
       <label>
           <select name="select">
               <%
-                  queryResult = actorDAO.listAll();
-                  if (queryResult.isSuccess()) {
-                      List<Actor> allActors = (List<Actor>) queryResult.getResult();
-                      for (Actor actor : allActors) {
+                  List<Actor> actors = actorDAO.listAll();
+                  for (Actor actor : actors) {
               %>
               <option><%=actor.getId()%> <%=actor.getName()%></option>
               <%
-                      }
                   }
               %>
           </select>

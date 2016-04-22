@@ -31,16 +31,6 @@
       private ActorDAO actorDAO = new ActorDAO();
       private DirectorDAO directorDAO = new DirectorDAO();
       private MovieDAO movieDAO = new MovieDAO();
-
-      private void showErrorPage(HttpServletRequest request, HttpServletResponse response, String errorMessage) {
-          RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
-          request.setAttribute("errorMessage", errorMessage);
-          try {
-              dispatcher.forward(request, response);
-          } catch (Exception e) {
-              e.printStackTrace();
-          }
-      }
   %>
 
   <form method="post" action="/editor_movies/edit">
@@ -109,19 +99,14 @@
       Please, choose countries for this movie: <br>
       <table>
           <%
-              QueryResult queryResult = countryDAO.listAll();
-              if (queryResult.isSuccess()) {
-                  List<Country> countries = (List<Country>) queryResult.getResult();
-                  for (Country country : countries) {
+              List<Country> countries = countryDAO.listAll();
+              for (Country country : countries) {
           %>
           <tr>
               <td><input type="checkbox" name="country<%=country.getId()%>"></td>
               <td><%=country.getName()%></td>
           </tr>
           <%
-                  }
-              } else {
-                  showErrorPage(request, response, queryResult.getErrorMessage());
               }
           %>
       </table>
@@ -129,19 +114,14 @@
       Please, choose genres for this movie: <br>
       <table>
           <%
-              queryResult = genreDAO.listAll();
-              if (queryResult.isSuccess()) {
-                  List<Genre> genres = (List<Genre>) queryResult.getResult();
-                  for (Genre genre : genres) {
+              List<Genre> genres = genreDAO.listAll();
+              for (Genre genre : genres) {
           %>
           <tr>
               <td><input type="checkbox" name="genre<%=genre.getId()%>"></td>
               <td><%=genre.getName()%></td>
           </tr>
           <%
-                  }
-              } else {
-                  showErrorPage(request, response, queryResult.getErrorMessage());
               }
           %>
       </table>
@@ -152,10 +132,8 @@
               <th></th><th>Name</th><th>Photo</th>
           </tr>
           <%
-              queryResult = actorDAO.listAll();
-              if (queryResult.isSuccess()) {
-                  List<Actor> actors = (List<Actor>) queryResult.getResult();
-                  for (Actor actor : actors) {
+              List<Actor> actors = actorDAO.listAll();
+              for (Actor actor : actors) {
           %>
           <tr>
               <td><input type="checkbox" name="actor<%=actor.getId()%>"></td>
@@ -163,9 +141,6 @@
               <td><img src="<%=actor.getPictureURL()%>"></td>
           </tr>
           <%
-                  }
-              } else {
-                  showErrorPage(request, response, queryResult.getErrorMessage());
               }
           %>
       </table>
@@ -176,10 +151,8 @@
               <th></th><th>Name</th><th>Photo</th>
           </tr>
           <%
-              queryResult = directorDAO.listAll();
-              if (queryResult.isSuccess()) {
-                  List<Director> directors = (List<Director>) queryResult.getResult();
-                  for (Director director : directors) {
+              List<Director> directors = directorDAO.listAll();
+              for (Director director : directors) {
           %>
           <tr>
               <td><input type="checkbox" name="director<%=director.getId()%>"></td>
@@ -187,9 +160,6 @@
               <td><img src="<%=director.getPictureURL()%>"></td>
           </tr>
           <%
-                  }
-              } else {
-                  showErrorPage(request, response, queryResult.getErrorMessage());
               }
           %>
       </table>
@@ -200,14 +170,11 @@
       <label>
           <select name="select">
               <%
-                  queryResult = movieDAO.listAll();
-                  if (queryResult.isSuccess()) {
-                      List<Movie> allMovies = (List<Movie>) queryResult.getResult();
-                      for (Movie movie : allMovies) {
+                  List<Movie> movies = movieDAO.listAll();
+                  for (Movie movie : movies) {
               %>
               <option><%=movie.getId()%> <%=movie.getTitle()%></option>
               <%
-                      }
                   }
               %>
           </select>

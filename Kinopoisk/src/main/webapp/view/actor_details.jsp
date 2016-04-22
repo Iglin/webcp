@@ -1,8 +1,8 @@
 <%@ page import="com.kinopoisk.dao.ActorDAO" %>
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.Actor" %>
 <%@ page import="com.kinopoisk.model.Movie" %>
 <%@ page import="org.hibernate.Session" %>
+<%@ page import="java.util.Optional" %>
 <%@ page import="java.util.Set" %><%--
   Created by IntelliJ IDEA.
   User: user
@@ -35,9 +35,9 @@
 <% } else {
     ActorDAO actorDAO = new ActorDAO();
     try (Session hibernateSession = actorDAO.openSession()) {
-        QueryResult queryResult = actorDAO.getById(Integer.parseInt(id));
-        if (queryResult.isSuccess()) {
-            Actor actor = (Actor) queryResult.getResult();
+        Optional<Actor> queryResult = actorDAO.getById(Integer.parseInt(id));
+        if (queryResult.isPresent()) {
+            Actor actor = (Actor) queryResult.get();
 %>
 <h2><%=actor.getName()%></h2>
 <div><img class="dir_pic" src="<%=actor.getPictureURL()%>"/></div>
@@ -66,7 +66,7 @@
 <%
     } else {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
-        request.setAttribute("errorMessage", queryResult.getErrorMessage());
+        request.setAttribute("errorMessage", "Could not load actor from database.");
         dispatcher.forward(request, response);
     }
     } catch (ExceptionInInitializerError e) {

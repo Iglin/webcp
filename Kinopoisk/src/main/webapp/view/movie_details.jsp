@@ -1,9 +1,9 @@
+<%@ page import="com.kinopoisk.controller.MainController" %>
 <%@ page import="com.kinopoisk.dao.MovieDAO" %>
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.*" %>
 <%@ page import="org.hibernate.Session" %>
-<%@ page import="java.util.Set" %>
-<%@ page import="com.kinopoisk.controller.MainController" %><%--
+<%@ page import="java.util.Optional" %>
+<%@ page import="java.util.Set" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 25.03.2016
@@ -38,9 +38,9 @@
 <% } else {
     MovieDAO movieDAO = new MovieDAO();
     try (Session hibernateSession = movieDAO.openSession()) {
-        QueryResult queryResult = movieDAO.getById(Integer.parseInt(id));
-        if (queryResult.isSuccess()) {
-            Movie movie = (Movie) queryResult.getResult();
+        Optional<Movie> queryResult = movieDAO.getById(Integer.parseInt(id));
+        if (queryResult.isPresent()) {
+            Movie movie = (Movie) queryResult.get();
 %>
 <h2><%=movie.getTitle()%></h2>
 <% if (movie.getTagline() != null) { %>
@@ -126,7 +126,7 @@
 
 <%
     } else {
-        mainController.showErrorPage(request, response, queryResult.getErrorMessage());
+        mainController.showErrorPage(request, response, "Could not load movie from database.");
     }
     } catch (Exception e) {
         mainController.showErrorPage(request, response, "Could not set database session.");

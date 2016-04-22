@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by alexander on 27.02.16.
@@ -20,47 +21,44 @@ public class CountryDAO {
         commonDAO.closeSession();
     }
 
-    public QueryResult add(Country country) {
+    public int add(Country country) {
         return commonDAO.add(country);
     }
 
-    public QueryResult update(Country country) {
-        return commonDAO.update(country);
+    public void update(Country country) {
+        commonDAO.update(country);
     }
 
-    public QueryResult delete(Country country) {
-        return commonDAO.delete(country);
+    public void delete(Country country) {
+        commonDAO.delete(country);
     }
 
-    public QueryResult getById(int id) {
+    public Optional<Country> getById(int id) {
         return commonDAO.getById(id, Country.class);
     }
 
-    public Country getById(int id, Session session) {
-        return session.get(Country.class, id);
+    public Optional<Country> getById(int id, Session session) {
+        return Optional.ofNullable(session.get(Country.class, id));
     }
 
-
-    public QueryResult getByIdNoSession(int id) {
+    public Optional<Country> getByIdNoSession(int id) {
         return commonDAO.getByIdNoSession(id, Country.class);
     }
 
-    public QueryResult getByName(String countryName) {
+    public Optional<Country> getByName(String countryName) {
         try (Session session = openSession()) {
             List<Country> list = session.createCriteria(Country.class)
                     .add(Restrictions.eq("name", countryName))
                     .list();
             if (list.isEmpty()) {
-                return new QueryResult(false, "Country with name '" + countryName + "' not found.");
+                return Optional.empty();
             } else {
-                return new QueryResult(true, list.get(0));
+                return Optional.ofNullable(list.get(0));
             }
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
         }
     }
 
-    public QueryResult listAll() {
+    public List<Country> listAll() {
         return commonDAO.listAll(Country.class);
     }
 }

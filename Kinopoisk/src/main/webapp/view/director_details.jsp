@@ -1,8 +1,8 @@
 <%@ page import="com.kinopoisk.dao.DirectorDAO" %>
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
 <%@ page import="com.kinopoisk.model.Director" %>
 <%@ page import="com.kinopoisk.model.Movie" %>
 <%@ page import="org.hibernate.Session" %>
+<%@ page import="java.util.Optional" %>
 <%@ page import="java.util.Set" %><%--
   Created by IntelliJ IDEA.
   User: user
@@ -35,9 +35,9 @@
 <% } else {
     DirectorDAO directorDAO = new DirectorDAO();
     try (Session hibernateSession = directorDAO.openSession()) {
-        QueryResult queryResult = directorDAO.getById(Integer.parseInt(id));
-        if (queryResult.isSuccess()) {
-            Director director = (Director) queryResult.getResult();
+        Optional<Director> queryResult = directorDAO.getById(Integer.parseInt(id));
+        if (queryResult.isPresent()) {
+            Director director = (Director) queryResult.get();
 %>
 <h2><%=director.getName()%></h2>
 <div><img class="dir_pic" src="<%=director.getPictureURL()%>"/></div>
@@ -66,7 +66,7 @@
 <%
     } else {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/error.jsp");
-        request.setAttribute("errorMessage", queryResult.getErrorMessage());
+        request.setAttribute("errorMessage", "Could not load director from database.");
         dispatcher.forward(request, response);
     }
     } catch (ExceptionInInitializerError e) {

@@ -1,10 +1,8 @@
-<%@ page import="com.kinopoisk.controller.MainController" %>
 <%@ page import="com.kinopoisk.dao.CountryDAO" %>
 <%@ page import="com.kinopoisk.dao.MovieDAO" %>
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
+<%@ page import="com.kinopoisk.model.Country" %>
 <%@ page import="com.kinopoisk.model.Movie" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.kinopoisk.model.Country" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
@@ -26,8 +24,6 @@
   <%!
       private CountryDAO countryDAO = new CountryDAO();
       private MovieDAO movieDAO = new MovieDAO();
-
-      private MainController mainController = MainController.getInstance();
   %>
 
   <form method="post" action="/editor_countries/edit">
@@ -39,10 +35,8 @@
               <th></th><th>Title</th><th>Poster</th>
           </tr>
           <%
-              QueryResult queryResult = movieDAO.listAll();
-              if (queryResult.isSuccess()) {
-                  List<Movie> movies = (List<Movie>) queryResult.getResult();
-                  for (Movie movie : movies) {
+              List<Movie> movies = movieDAO.listAll();
+              for (Movie movie : movies) {
           %>
           <tr>
               <td><input type="checkbox" name="movie<%=movie.getId()%>"></td>
@@ -50,9 +44,6 @@
               <td><img src="<%=movie.getPosterURL()%>"></td>
           </tr>
           <%
-                  }
-              } else {
-                  mainController.showErrorPage(request, response, queryResult.getErrorMessage());
               }
           %>
       </table>
@@ -65,14 +56,11 @@
       <label>
           <select name="select">
               <%
-                  queryResult = countryDAO.listAll();
-                  if (queryResult.isSuccess()) {
-                      List<Country> countries = (List<Country>) queryResult.getResult();
-                      for (Country country : countries) {
+                  List<Country> countries = countryDAO.listAll();
+                  for (Country country : countries) {
               %>
               <option><%=country.getId()%> <%=country.getName()%></option>
               <%
-                      }
                   }
               %>
           </select>

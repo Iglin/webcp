@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by user on 27.02.2016.
@@ -21,95 +22,75 @@ public class MovieDAO {
         commonDAO.closeSession();
     }
 
-    public QueryResult add(Movie movie) {
+    public int add(Movie movie) {
         return commonDAO.add(movie);
     }
 
-    public QueryResult update(Movie movie) {
-        return commonDAO.update(movie);
+    public void update(Movie movie) {
+        commonDAO.update(movie);
     }
 
-    public QueryResult delete(Movie movie) {
-        return commonDAO.delete(movie);
+    public void delete(Movie movie) {
+        commonDAO.delete(movie);
     }
 
-    public QueryResult getById(int id) {
+    public Optional<Movie> getById(int id) {
         return commonDAO.getById(id, Movie.class);
     }
 
-    public QueryResult getByIdNoSession(int id) {
+    public Optional<Movie> getByIdNoSession(int id) {
         return commonDAO.getByIdNoSession(id, Movie.class);
     }
 
-    public Movie getById(int id, Session session) {
-        return session.get(Movie.class, id);
+    public Optional<Movie> getById(int id, Session session) {
+        return Optional.ofNullable(session.get(Movie.class, id));
     }
 
-    public QueryResult listAll() {
+    public List<Movie> listAll() {
         return commonDAO.listAll(Movie.class);
     }
 
-    public QueryResult listByTitle(String title) {
-        List<Movie> list;
+    public List<Movie> listByTitle(String title) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Criteria criteria = session.createCriteria(Movie.class);
             criteria.add(Restrictions.ilike("title", "%" + title + "%"));
-            list = criteria.list();
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
+            return criteria.list();
         }
-        return new QueryResult(true, list);
     }
 
-    public QueryResult listByActor(String actorsName) {
-        List<Movie> list;
+    public List<Movie> listByActor(String actorsName) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Criteria criteria = session.createCriteria(Movie.class);
             criteria.createAlias("actors", "actor");
             criteria.add(Restrictions.ilike("actor.name", "%" + actorsName + "%"));
-            list = criteria.list();
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
+            return criteria.list();
         }
-        return new QueryResult(true, list);
     }
 
-    public QueryResult listByDirector(String director) {
-        List<Movie> list;
+    public List<Movie> listByDirector(String director) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Criteria criteria = session.createCriteria(Movie.class);
             criteria.createAlias("directors", "director");
             criteria.add(Restrictions.ilike("director.name", "%" + director + "%"));
-            list = criteria.list();
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
+            return criteria.list();
         }
-        return new QueryResult(true, list);
     }
 
-    public QueryResult listByGenre(String genre) {
-        List<Movie> list;
+    public List<Movie> listByGenre(String genre) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Criteria criteria = session.createCriteria(Movie.class);
             criteria.createAlias("genres", "genre");
             criteria.add(Restrictions.ilike("genre.name", "%" + genre + "%"));
-            list = criteria.list();
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
+            return criteria.list();
         }
-        return new QueryResult(true, list);
     }
 
-    public QueryResult listByCountry(String country) {
-        List<Movie> list;
+    public List<Movie> listByCountry(String country) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Criteria criteria = session.createCriteria(Movie.class);
             criteria.createAlias("countries", "country");
             criteria.add(Restrictions.ilike("country.name", "%" + country + "%"));
-            list = criteria.list();
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
+            return criteria.list();
         }
-        return new QueryResult(true, list);
     }
 }

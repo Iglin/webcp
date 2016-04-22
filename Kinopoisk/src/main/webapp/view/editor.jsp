@@ -1,5 +1,4 @@
-<%@ page import="com.kinopoisk.dao.QueryResult" %>
-<%@ page import="java.io.IOException" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: user
   Date: 16.02.2016

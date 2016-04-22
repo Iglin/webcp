@@ -2,7 +2,6 @@ package com.kinopoisk.controller;
 
 import com.kinopoisk.dao.ActorDAO;
 import com.kinopoisk.dao.CountryDAO;
-import com.kinopoisk.dao.QueryResult;
 import com.kinopoisk.model.Actor;
 import com.kinopoisk.model.Country;
 
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Optional;
 
 /**
  * Created by user on 08.04.2016.
@@ -25,23 +25,15 @@ public class ActorEditorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("save") != null) {
-            QueryResult queryResult = saveActor(req, resp);
-            if (queryResult.isSuccess()) {
-                resp.sendRedirect("/editor_actors/show");
-            } else {
-                mainController.showErrorPage(req, resp, queryResult.getErrorMessage());
-            }
+            saveActor(req, resp);
+            resp.sendRedirect("/editor_actors/show");
         } else if (req.getParameter("delete") != null) {
-            QueryResult queryResult = delete(req);
-            if (queryResult.isSuccess()) {
-                resp.sendRedirect("/editor_actors/show");
-            } else {
-                mainController.showErrorPage(req, resp, queryResult.getErrorMessage());
-            }
+            delete(req);
+            resp.sendRedirect("/editor_actors/show");
         }
     }
 
-    private QueryResult saveActor(HttpServletRequest request, HttpServletResponse response) {
+    private void saveActor(HttpServletRequest request, HttpServletResponse response) {
         Actor actor = new Actor();
         actor.setName(request.getParameter("name"));
         actor.setPictureURL(request.getParameter("pic"));
@@ -49,32 +41,22 @@ public class ActorEditorController extends HttpServlet {
         if (!parameter.isEmpty()) {
             actor.setDateOfBirth(Date.valueOf(parameter));
         }
-        QueryResult queryResult = countryDAO.getByName(request.getParameter("country"));
-        if (queryResult.isSuccess()) {
-            actor.setCountry((Country) queryResult.getResult());
-        } else {
-            mainController.showErrorPage(request, response, queryResult.getErrorMessage());
+        Optional<Country> queryResult = countryDAO.getByName(request.getParameter("country"));
+        if (queryResult.isPresent()) {
+            actor.setCountry(queryResult.get());
         }
 
         actor.setMovies(mainController.collectMoviesFromRequest(request, response));
-        return actorDAO.add(actor);
+        actorDAO.add(actor);
     }
 
-    private QueryResult delete(HttpServletRequest req) {
+    private void delete(HttpServletRequest req) {
         String actorToDelete = req.getParameter("select");
         if (actorToDelete != null) {
-            QueryResult queryResult = actorDAO.getByIdNoSession(Integer.parseInt(actorToDelete.split(" ")[0]));
-            if (queryResult.isSuccess()) {
-                if (queryResult.getResult() != null) {
-                    return actorDAO.delete((Actor) queryResult.getResult());
-                } else {
-                    return new QueryResult(false, "No actor to delete");
-                }
-            } else {
-                return queryResult;
+            Optional<Actor> queryResult = actorDAO.getByIdNoSession(Integer.parseInt(actorToDelete.split(" ")[0]));
+            if (queryResult.isPresent()) {
+                actorDAO.delete(queryResult.get());
             }
-        } else {
-            return new QueryResult(false, "No actor to delete");
         }
     }
 }

@@ -3,6 +3,7 @@ package com.kinopoisk.dao;
 import org.hibernate.Session;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by root on 05.03.16.
@@ -22,67 +23,44 @@ public class CommonDAO {
         }
     }
 
-    public QueryResult add(Object object) {
-        int id;
+    public int add(Object object) {
         try (Session session = openSession()) {
             session.beginTransaction();
-            id = (Integer) session.save(object);
+            int id = (Integer) session.save(object);
             session.getTransaction().commit();
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
+            return id;
         }
-        return new QueryResult(true, id);
     }
 
-    public QueryResult update(Object object) {
+    public void update(Object object) {
         try (Session session = openSession()) {
             session.beginTransaction();
             session.update(object);
             session.getTransaction().commit();
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
         }
-        return new QueryResult(true, null);
     }
 
-    public QueryResult delete(Object object) {
+    public void delete(Object object) {
         try (Session session = openSession()) {
             session.beginTransaction();
             session.delete(object);
             session.getTransaction().commit();
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
         }
-        return new QueryResult(true, null);
     }
 
-    public QueryResult getById(int id, Class objClass) {
-        Object object;
-        try {
-            object = session.get(objClass, id);
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
-        }
-        return new QueryResult(true, object);
+    public Optional getById(int id, Class objClass) {
+        return Optional.ofNullable(session.get(objClass, id));
     }
 
-    public QueryResult getByIdNoSession(int id, Class objClass) {
-        Object object;
+    public Optional getByIdNoSession(int id, Class objClass) {
+        try (Session session = openSession()) {
+            return Optional.ofNullable(session.get(objClass, id));
+        }
+    }
+
+    public List listAll(Class objClass) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            object = session.get(objClass, id);
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
+            return session.createCriteria(objClass).list();
         }
-        return new QueryResult(true, object);
-    }
-
-    public QueryResult listAll(Class objClass) {
-        List<Object> list;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            list = session.createCriteria(objClass).list();
-        } catch (Exception e) {
-            return new QueryResult(false, e.getMessage());
-        }
-        return new QueryResult(true, list);
     }
 }
