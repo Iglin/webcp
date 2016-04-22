@@ -4,6 +4,7 @@
 <%@ page import="com.kinopoisk.model.Movie" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="/view/errorPage.jsp"%>
 <html>
   <head>
       <link rel="stylesheet" type="text/css" href="/resources/css/main.css">

@@ -6,8 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page errorPage="/view/errorPage.jsp"%>
+<%@ page isErrorPage="true"%>
 <html>
 <head>
     <title>Error</title>
@@ -15,7 +14,21 @@
 </head>
 <body>
 <h3>Error</h3>
-<c:out value="${errorMessage}"/>
+<%
+    if (exception instanceof NoClassDefFoundError) {
+%>
+<%="Could not connect to database."%>
+<%
+    } else {
+%>
+<% if (exception.getLocalizedMessage() != null) { %>
+<%=exception.getLocalizedMessage()%>
+<% } else if (exception.getMessage() != null) { %>
+<%=exception.getMessage()%>
+<% } else { %>
+Ошибка!
+<% }
+}%>
 <a href="/view/index.jsp">Main page</a>
 </body>
 </html>
